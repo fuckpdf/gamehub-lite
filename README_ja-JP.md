@@ -1,5 +1,7 @@
 # GameHub Lite
 
+**Language:** [English](./README.md) | **日本語**
+
 ## GameHub Liteとは何ですか？
 
 GameHub Liteは、教育目的のためにコミュニティによって維持と管理されているGameHubの改良版です。

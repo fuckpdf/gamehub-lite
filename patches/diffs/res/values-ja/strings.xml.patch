@@ -20,7 +20,7 @@
 @@ -1280,7 +1280,7 @@
      <string name="llauncher_home_mobile_game_tips">モバイルゲームのインポート、簡単に管理します</string>
      <string name="llauncher_home_pc_add_device">PCに接続してください</string>
-     <string name="llauncher_home_pc_emulator_add_game">PCゲームインポート</string>
+     <string name="llauncher_home_pc_emulator_add_game">PCゲームをインポート</string>
 -    <string name="llauncher_home_pc_emulator_join_us_tips">ケンタッキー公式ゲームコミュニティへ参加！最新情報をチェック >>></string>
 +    <string name="llauncher_home_pc_emulator_join_us_tips">テレメトリの削除に関する報告とその舞台裏をご覧ください >>></string>
      <string name="llauncher_home_pc_emulator_tips">PCゲームをインポートして、モバイルでAAAタイトルをプレイ</string>

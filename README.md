@@ -1,5 +1,7 @@
 # GameHub Lite
 
+**Language:** **English** | [日本語](./README_ja-JP.md)
+
 ## What is GameHub Lite?
 
 GameHub Lite is a community-maintained modified version of GameHub for education purposes.

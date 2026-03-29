@@ -142,7 +142,7 @@ KEY_ALIAS="your_key_alias" \
 | 追加     | 2,856 | 新しいリソース、変更したアセット、新機能 |
 | 変更 | 223   | 動作変更のためのsmaliコードパッチ     |
 
-### 削除したコンポーネント
+### 削除するコンポーネント
 
 - **ネイティブライブラリ**: libumeng-spy.so、libcrashsdk.so、libalicomphonenumberauthsdk_core.soなど
 - **SDK**: Umeng Analytics、JPush、Firebase Analytics、Tencent login

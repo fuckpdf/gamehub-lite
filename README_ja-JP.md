@@ -57,7 +57,7 @@ stop using windows
 
 1. GameHub 5.1.0のAPKをダウンロードし、`apk/GameHub-5.1.0.apk`に配置
 
-2. Patcherを実行:
+2. パッチャーを実行:
 
 ```bash
 ./patch.sh
@@ -123,7 +123,7 @@ KEY_ALIAS="your_key_alias" \
 
 ## 仕組み
 
-Patcherは複数のステップのプロセスを使用します:
+パッチャーは複数のステップのプロセスを使用します:
 
 1. **デコンパイル** - apktoolを使用して元のAPKをsmaliバイトコードにデコンパイルします
 2. **削除** - テレメトリSDK、未使用のアセット、およびトラッキングライブラリを削除します
@@ -156,7 +156,7 @@ Patcherは複数のステップのプロセスを使用します:
 
 ## 開発者向け
 
-### パッチによる再生
+### パッチによる生成
 
 Lite APKを改造してパッチを更新する場合は:
 
@@ -188,148 +188,149 @@ patches/
 └── stats.txt              # パッチの統計
 ```
 
-### Modifying Patches
+### パッチの変更
 
-1. Decompile the Lite APK manually:
+1. Lite APKを手動でデコンパイル:
 
    ```bash
    apktool d apk/GameHub-Lite.apk -o work/lite
    ```
 
-2. Make your changes to files in `work/lite/`
+2. `work/lite/`内のファイルに変更を追加します
 
-3. Rebuild and test:
+3. リビルドとテスト:
 
    ```bash
    apktool b work/lite -o work/test.apk
-   # Sign and install for testing
+   # テストのために署名してインストール
    ```
 
-4. When satisfied, regenerate patches:
+4. 満足したらパッチを再生成:
    ```bash
    ./generate-patches.sh
    ```
 
-## Troubleshooting
+## トラブルシューティング
 
-### Patch fails to apply
+### パッチの適用に失敗しました
 
-If patches fail due to APK version mismatch:
+APKのバージョンが不一致でパッチが失敗した場合:
 
-- Ensure you're using GameHub 5.1.0 exactly
-- Check the MD5 hash matches expected value
-- Try regenerating patches with your APK version
+- GameHub 5.1.0を正確に使用していることを確認してください
+- MD5ハッシュが期待値と一致していることを確認してください
+- 使用しているAPKバージョンでパッチを再生成してみてください
 
-### APK won't install
+### APKをインストールできません
 
-- Uninstall any existing GameHub Lite first
-- Check if device is rooted - some patches may conflict (unlikely)
+- 始めに既存のGameHub Liteをアンインストールしてください
+- デバイスがroot化されているか確認してください - 一部のパッチで競合する可能性があります(可能性は低いですが)
 
-### Build errors
+### ビルドエラー
 
-- Ensure apktool is version 2.8.0+ (`apktool --version`)
-- Check Java version is 17+ (`java -version`)
-- Try cleaning work directory: `rm -rf work/`
+- apktoolのバージョンが2.8.0以降であるか確認してください (`apktool --version`)
+- Javaのバージョンが17以降であるか確認してください (`java -version`)
+- 作業ディレクトリのクリーンアップを試してください: `rm -rf work/`
 
-## Version Compatibility
+## バージョンの互換性
 
-| GameHub Version | Patcher Version | Status         |
+| GameHubのバージョン | パッチャーのバージョン | 状態         |
 | --------------- | --------------- | -------------- |
-| 5.1.0           | 1.0             | Supported      |
-| 5.3.3           | -               | in development |
+| 5.1.0           | 1.0             | 対応      |
+| 5.3.3           | -               | 開発中 |
 
-## Alternative: ReVanced Patches (WORK IN PROGRESS)
+## 代替: ReVancedパッチ(作業中)
 
-An alternative ReVanced-based patching system is available in the `revanced/` directory. This approach uses the [ReVanced Patcher](https://github.com/ReVanced/revanced-patcher) framework for bytecode-level modifications.
-This doesn't currently support all features of the Lite APK, but you are free to contribute patches for missing features and resolve existing issues.
+`revanced/`ディレクトリには、ReVancedベースの代替パッチ適用システムが用意されています。このシステムは、バイトコードレベルの変更に[ReVanced Patcher](https://github.com/ReVanced/revanced-patcher)フレームワークを使用します。
+現時点では、Lite APKのすべての機能をサポートしていませんが、不足している機能のパッチの提供や、既存の問題の解決は可能です。
 
 ```bash
 cd revanced
 ./apply-patches.sh ../apk/GameHub-5.1.0.apk
 ```
 
-See [revanced/README.md](revanced/README.md) for details.
+詳細は[revanced/README.md](revanced/README.md)を参照してください。
 
-### When to Use Which
+### どちらを使うべきですか
 
-| Approach                      | Best For                                                |
+| アプローチ                      | 最適な用途                                                |
 | ----------------------------- | ------------------------------------------------------- |
-| **Diff-based** (`./patch.sh`) | Full control, complete SDK removal, simpler maintenance |
-| **ReVanced** (`revanced/`)    | ReVanced Manager integration, portable JAR patches      |
+| **差分ベース** (`./patch.sh`) | 完全なコントロール、SDKの完全な削除、よりシンプルなメンテナンス |
+| **ReVanced** (`revanced/`)    | ReVanced Managerとの統合、ポータブルJARパッチ
 
-## License
+## ライセンス
 
-This project is for educational and personal privacy purposes only. The patches and tooling are provided as-is. GameHub is a product of its respective owners.
+このプロジェクトは、教育目的および個人プライバシー保護のみを目的としています。パッチおよびツールは現状のまま提供されます。GameHubはそれぞれの所有者の製品です。
 
-## Contributing
+## 貢献
 
-1. Fork the repository
-2. Make your changes
-3. Regenerate patches with `./generate-patches.sh`
-4. Test the full patch cycle with `./patch.sh`
-5. Submit a pull request
+1. リポジトリをフォーク
+2. 変更を加える
+3. `./generate-patches.sh`を使用してパッチを再生成
+4. `./patch.sh`を使用してパッチサイクル全体をテスト
+5. プルリクエストを送信
 
-## Different versions of GameHub Lite
+## GameHub Liteの異なるバージョン
 
-The different versions are identical. What we do is a very old android trick to gain extra performance on some devices.
+各バージョンは同一です。私たちが行っているのは、一部の端末でパフォーマンスを向上させるための古いAndroidのテクニックです。
 
 **Antutu**
 
-Some manufacturers “cheat” by setting the governor to performance when they detect the Antutu package name.
+一部のメーカーは、Antutuのパッケージ名を検出するとガバナーをパフォーマンスモードに設定して「不正行為」を行っています。
 
-_Nerd explanation:_
+_オタク向けの解説:_
 
-The CPU governor essentially controls the CPU's frequency scaling. allowing it to operate at different clock speeds and voltages based on the system load. So making the CPU go fast for sustained usage, what is actually made for peak usage. This comes with a risk of overheating, but I don’t believe in this. Android does a well enough job of thermal management and makes it extremely hard for software to exceed what the hardware is capable of and damaging itself.
+CPUガバナーは、基本的にCPU周波数スケーリングを制御し、システム負荷に応じて異なるクロック速度と電圧で動作できるようにします。つまり、持続的な使用のためにCPUを高速化し、本来はピーク時の使用を想定して設計されている機能を実現します。これには過熱のリスクを伴いますが、私はそうは思いません。
+Androidは熱管理が十分に優れており、ソフトウェアがハードウェアの能力を超えて損傷を与えることは極めて困難だからです。
 
-That said, it’s still extra heat. More heat == more bad. I just think it’s negligible, especially if your device has a fan.
+とはいえ、やはり余分な熱が発生するのは事実です、熱が増えるほどに悪影響も大きくなります。ただ、デバイスにファンが付いている場合は、その影響はごくわずかだと思います。
 
 **PUBG**
 
-On a high level it’s the same as Antutu, but some slight differences that only benefit games. Think of network prioritization and touch input latency improvements. The manufacturers goal when they detect Antutu is **ALL THE POWER**. Benchmarks are relatively short and it makes them look better on comparison websites.
+大まかに言えばAntutuと同じですが、ゲームにのみメリットをもたらす細かな違いがいくつか存在します。ネットワークの優先順位付けやタッチ入力の遅延改善などが挙げられます。メーカーがAntutuを検出する際のゴールは、**最大限の性能**です。ベンチマークは比較的短時間で完了するため、比較サイトでの見栄えが良くなります。
 
-The goal for PUBG is more like **MORE POWER**, since the intention is often to have a game running for longer it has less aggressive changes.
+一方、PUBGの場合のゴールは**さらなる性能向上**です。ゲームをより長時間プレイ可能にすることが目的であることが多いため、変更はそれほど大胆ではありません。
 
-**TLDR and summary:**
+**TLDRと概要:**
 
-**Antutu** spoofing:
+**Antutu**の偽装:
 
-    •    Maximum CPU/GPU frequencies unlocked
-    •    Aggressive performance governors
-    •    Short-duration performance boost (benchmark workload)
-    •    Thermal limits are less strict
-    •    All cores available
+    •    最大CPU/GPU周波数の制限を解除
+    •    積極的なパフォーマンス制御
+    •    短時間パフォーマンス向上(ベンチマークワークロード)
+    •    サーマルスロットリングの緩和
+    •    すべてのコアを使用可能
 
-**PUBG** and other games spoofing:
+**PUBG**とその他のゲームの偽装:
 
-    •    Sustained gaming performance profiles
-    •    GPU driver optimizations (Adreno/Mali game-specific paths)
-    •    Frame pacing and scheduling improvements
-    •    Reduced touch latency
-    •    Network QoS prioritization
-    •    Different thermal management (sustained vs burst)
-    •    Qualcomm “Game Performance Mode”
-    •    Sometimes enables features like frame-gen
+    •    持続的なゲームパフォーマンスプロファイル
+    •    GPUドライバの最適化(Adreno/Maliゲーム固有パス)
+    •    フレームペーシングとスケジューリングの改善
+    •    タッチ遅延の低減
+    •    ネットワークQoSの優先順位付け
+    •    異なる熱管理(持続的 vs バースト)
+    •    Qualcomm謹製の「ゲームパフォーマンスモード」
+    •    フレーム生成などの機能を有効化する場合あり
 
-**Ludashi** spoofing:
+**Ludashi**の偽装:
 
-    •    Similar to Antutu but slightly less aggressive
-    •    Longer sustained performance boost (multi-minute tests)
-    •    Memory frequency optimization
+    •    Antutuに似ていますが、積極さは低い
+    •    より長時間持続するパフォーマンス向上(数分間に渡るテスト)
+    •    メモリ周波数の最適化
 
-## Support
+## サポート
 
-If you have trouble running a game, please see if anyone shared a solution on [EmuReady](https://www.emuready.com) before you ask for help in the Discord server.
+ゲームの実行に問題がある場合は、Discordサーバーでヘルプを求める前に[EmuReady](https://www.emuready.com)で誰かが解決策を共有していないか確認してください。
 
-For support, discussion and development updates join the [EmuReady Discord server](https://discord.gg/CYhCzApXav).
+サポート、ディスカッション、開発状況の最新情報については、[EmuReady Discord server](https://discord.gg/CYhCzApXav)にご参加ください。
 
 ---
 
-## Related Projects
+## 関連プロジェクト
 
-| Repository                                                                               | Description                                                                                                                                                      |
+| リポジトリ                                                                               | 詳細                                                                                                                                                      |
 | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [gamehub-lite](https://github.com/Producdevity/gamehub-lite)                             | Main project with pre-built APK releases and patch files                                                                                                         |
-| [gamehub-lite-api](https://github.com/Producdevity/gamehub-lite-api)                     | Static JSON API hosting component manifests, configuration files, and mock responses that replace the original Chinese servers                                   |
-| [gamehub-lite-worker](https://github.com/Producdevity/gamehub-lite-worker)               | Cloudflare Worker API proxy that handles token management, signature regeneration, privacy protection (IP hiding, fingerprint sanitization), and content routing |
-| [gamehub-lite-news](https://github.com/Producdevity/gamehub-lite-news)                   | News aggregator that collects gaming news from RSS feeds and GitHub releases, transforms them into GameHub's API format                                          |
-| [gamehub-lite-token-refresh](https://github.com/Producdevity/gamehub-lite-token-refresh) | Automated token refresher that uses Mail.tm OTP authentication to maintain valid GameHub tokens, runs every 4 hours via Cloudflare Cron                          |
+| [gamehub-lite](https://github.com/Producdevity/gamehub-lite)                             | プリビルド済みのAPKリリースとパッチファイルを含むメインプロジェクト                                                                                                         |
+| [gamehub-lite-api](https://github.com/Producdevity/gamehub-lite-api)                     | オリジナルの中国製サーバーを置き換える静的JSON APIホスティングコンポーネントのマニフェスト、設定ファイル、およびモックレスポンス                                  |
+| [gamehub-lite-worker](https://github.com/Producdevity/gamehub-lite-worker)               | トークン管理、署名の再生成、プライバシーの保護(IPアドレスの隠蔽、フィンガープリントのサニタイズ)、コンテンツツールを処理するCloudflare Worker APIプロキシ |
+| [gamehub-lite-news](https://github.com/Producdevity/gamehub-lite-news)                   | RSSフィードやGitHubリリースからゲーム関連ニュースを収集、GameHubのAPI形式に変換するニュースアグリゲーター                                          |
+| [gamehub-lite-token-refresh](https://github.com/Producdevity/gamehub-lite-token-refresh) | Mail.tm OTP認証を使用して有効なGameHubトークンを維持する自動トークン更新機能は、Cloudflare Cron経由で4時間ごとに実行されます

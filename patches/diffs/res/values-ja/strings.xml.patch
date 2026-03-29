@@ -1,35 +1,35 @@
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
 @@ -134,7 +134,7 @@
-     <string name="ando_str_single_file_size">超过限定文件大小</string>
-     <string name="ando_str_single_file_type_mismatch">文件类型不匹配</string>
+     <string name="ando_str_single_file_size">ファイルサイズが制限を超えました</string>
+     <string name="ando_str_single_file_type_mismatch">ファイルタイプが不一致です</string>
 -    <string name="app_name">蓋世ゲーム</string>
 +    <string name="app_name">GameHub Lite</string>
-     <string name="app_update_background_downloading">Downloading new version in the background…</string>
-     <string name="app_update_click_hint">Click to install</string>
-     <string name="app_update_close">Close</string>
+     <string name="app_update_background_downloading">バックグラウンドで最新のバージョンをダウンロード中です…</string>
+     <string name="app_update_click_hint">クリックでインストール</string>
+     <string name="app_update_close">閉じる</string>
 @@ -787,7 +787,7 @@
-     <string name="fetching_info">Fetching info</string>
-     <string name="firmware_no_support_gtouch_hint">Current firmware does not support G-Touch. Update firmware before playing</string>
-     <string name="first_save_config_tips">Please save your config first</string>
+     <string name="fetching_info">情報を取得</string>
+     <string name="firmware_no_support_gtouch_hint">現在のファームウェアはG-Touchに非対応です。プレイする前にファームウェアをアップデートしてください。</string>
+     <string name="first_save_config_tips">始めに設定を保存してください</string>
 -    <string name="follow_system">システムに従う</string>
 +    <string name="follow_system">デフォルト</string>
      <string name="force_audio_track">オーディオトラックを強制</string>
      <string name="force_enable">強制的に有効化</string>
      <string name="fps_120">120 FPS</string>
 @@ -1280,7 +1280,7 @@
-     <string name="llauncher_home_mobile_game_tips">Import mobile games, easy management</string>
-     <string name="llauncher_home_pc_add_device">Connect to your computer</string>
-     <string name="llauncher_home_pc_emulator_add_game">Import PC games</string>
+     <string name="llauncher_home_mobile_game_tips">モバイルゲームのインポート、簡単に管理します</string>
+     <string name="llauncher_home_pc_add_device">PCに接続してください</string>
+     <string name="llauncher_home_pc_emulator_add_game">PCゲームインポート</string>
 -    <string name="llauncher_home_pc_emulator_join_us_tips">ケンタッキー公式ゲームコミュニティへ参加！最新情報をチェック >>></string>
 +    <string name="llauncher_home_pc_emulator_join_us_tips">テレメトリの削除に関する報告とその舞台裏をご覧ください >>></string>
-     <string name="llauncher_home_pc_emulator_tips">Import PC games, play AAA titles on mobile</string>
-     <string name="llauncher_home_pc_link_tips">Stream PC games to your phone, play anywhere</string>
-     <string name="llauncher_home_pc_link_title">PC Link Remote Play</string>
+     <string name="llauncher_home_pc_emulator_tips">PCゲームをインポートして、モバイルでAAAタイトルをプレイ</string>
+     <string name="llauncher_home_pc_link_tips">PCを端末にストリーミングして、いつでもプレイ</string>
+     <string name="llauncher_home_pc_link_title">PC リンクリモートプレイ</string>
 @@ -1329,8 +1329,8 @@
-     <string name="llauncher_main_page_menu_dialog_hide">Hide game</string>
-     <string name="llauncher_main_page_menu_dialog_title">Please select an action for the games in the list？</string>
-     <string name="llauncher_main_page_menu_dialog_view_detail">View game details</string>
+     <string name="llauncher_main_page_menu_dialog_hide">ゲームを隠す</string>
+     <string name="llauncher_main_page_menu_dialog_title">リストにあるゲームに対して、どの操作を行いますか？</string>
+     <string name="llauncher_main_page_menu_dialog_view_detail">ゲームの詳細を表示</string>
 -    <string name="llauncher_main_page_title_explore">探す</string>
 -    <string name="llauncher_main_page_title_my">マイ</string>
 +    <string name="llauncher_main_page_title_explore">無料のゲーム</string>
@@ -38,83 +38,83 @@
      <string name="llauncher_main_page_top_button_goto_game">ゲームを続行</string>
      <string name="llauncher_main_page_top_button_open_detail">詳細を表示</string>
 @@ -1505,7 +1505,7 @@
-     <string name="llauncher_setting_notification_title4">Other Notifications</string>
-     <string name="llauncher_setting_notification_title5">Friend Notifications</string>
-     <string name="llauncher_setting_notification_title6">Highlight Notifications</string>
+     <string name="llauncher_setting_notification_title4">その他の通知</string>
+     <string name="llauncher_setting_notification_title5">フレンドの通知</string>
+     <string name="llauncher_setting_notification_title6">通知を強調表示</string>
 -    <string name="llauncher_setting_personal_information">ユーザー規約</string>
 +    <string name="llauncher_setting_personal_information">クレジット</string>
-     <string name="llauncher_setting_record_bitrat_default">Automatic (Recommended)</string>
-     <string name="llauncher_setting_record_clear_cache">Clear Cache</string>
-     <string name="llauncher_setting_record_desc">By default, a one-minute video is approximately…</string>
+     <string name="llauncher_setting_record_bitrat_default">自動(推奨)</string>
+     <string name="llauncher_setting_record_clear_cache">キャッシュを消去</string>
+     <string name="llauncher_setting_record_desc">デフォルトでの1分間の動画はおよそ…</string>
 @@ -1517,12 +1517,12 @@
- · Size 75MB, Resolution 1080p, Frame Rate 30FPS
- · Size 50MB, Resolution 720p, Frame Rate 30FPS
+ · サイズ 75MB、解像度 1080p、フレームレート 30FPS
+ · サイズ 50MB、解像度 720p、フレームレート 30FPS
  "</string>
 -    <string name="llauncher_setting_record_go_active">マッピングを有効化</string>
 +    <string name="llauncher_setting_record_go_active" />
-     <string name="llauncher_setting_record_rate1">Resolution 1080p, Frame Rate 60FPS</string>
-     <string name="llauncher_setting_record_rate2">Resolution 1080p, Frame Rate 30FPS</string>
-     <string name="llauncher_setting_record_rate3">Resolution 720p, Frame Rate 30FPS</string>
-     <string name="llauncher_setting_record_reset">Reset</string>
+     <string name="llauncher_setting_record_rate1">解像度 1080p、フレームレート 60FPS</string>
+     <string name="llauncher_setting_record_rate2">解像度 1080p、フレームレート 30FPS</string>
+     <string name="llauncher_setting_record_rate3">解像度 720p、フレームレート 30FPS</string>
+     <string name="llauncher_setting_record_reset">リセット</string>
 -    <string name="llauncher_setting_record_reset_mapping">マッピングをリセット</string>
 +    <string name="llauncher_setting_record_reset_mapping" />
-     <string name="llauncher_setting_record_title1">Record Video</string>
-     <string name="llauncher_setting_record_title2">Format</string>
-     <string name="llauncher_setting_record_title3">Bitrate</string>
+     <string name="llauncher_setting_record_title1">画面を録画</string>
+     <string name="llauncher_setting_record_title2">形式</string>
+     <string name="llauncher_setting_record_title3">ビットレート</string>
 @@ -2230,8 +2230,8 @@
-     <string name="pc_scan_error">Scan Error</string>
-     <string name="pc_select_file">Select File</string>
-     <string name="pc_select_game_folder">Select Game Folder</string>
+     <string name="pc_scan_error">スキャンエラー</string>
+     <string name="pc_select_file">ファイルを選択</string>
+     <string name="pc_select_game_folder">ゲームフォルダを選択</string>
 -    <string name="pc_setting_item_61">Steamネットワークの高速化</string>
 -    <string name="pc_setting_item_61_desc">ネットワーク制限のある地域への緩和策を提供</string>
 +    <string name="pc_setting_item_61" />
 +    <string name="pc_setting_item_61_desc" />
-     <string name="pc_setting_item_62">Launch in Windowed Mode</string>
-     <string name="pc_setting_item_62_desc">Run programs in windowed mode, some programs require this option to work properly</string>
-     <string name="pc_setting_page_title">Game Settings</string>
+     <string name="pc_setting_item_62">ウィンドウモードで起動</string>
+     <string name="pc_setting_item_62_desc">プログラムをウィンドウモードで実行します。一部のプログラムで、正常に動作させるために有効化する必要があります。</string>
+     <string name="pc_setting_page_title">ゲームの設定</string>
 @@ -3153,7 +3153,7 @@
-     <string name="wheel_description">Press the mouse scroll button to switch between [Camera mode] and [Cursor mode]. Drag and place this icon to the dropdown list on the screen. In [Cursor mode],you can scroll down the list by scroll the scroll wheel of mouse.</string>
-     <string name="wheel_orientation">Wheel Orientation</string>
-     <string name="wheel_sensitivity">Wheel Sensitivity</string>
+     <string name="wheel_description">マウスのスクロールボタンを押すと、[カメラモード]と[カーソルモード]に切り替えできます。このアイコンを画面上のドロップダウンリストにドラッグして配置してください。[カーソルモード]では、マウスのスクロールホイールを回すことでリストをスクロールできます。</string>
+     <string name="wheel_orientation">ホイールの方向</string>
+     <string name="wheel_sensitivity">ホイールの感度</string>
 -    <string name="winemu_account_value">アカウント(¥)</string>
-+    <string name="winemu_account_value">Account Value ($)</string>
-     <string name="winemu_add">Add</string>
-     <string name="winemu_add_config">Add Configurations</string>
-     <string name="winemu_add_to_game_lib">Add To Game Library</string>
++    <string name="winemu_account_value">アカウントの価値(¥)</string>
+     <string name="winemu_add">追加</string>
+     <string name="winemu_add_config">構成を追加</string>
+     <string name="winemu_add_to_game_lib">ゲームライブラリに追加</string>
 @@ -3262,7 +3262,7 @@
-     <string name="winemu_game_library">Game Library</string>
-     <string name="winemu_game_manage">Game Management</string>
-     <string name="winemu_game_num">Game Count</string>
+     <string name="winemu_game_library">ゲームライブラリ</string>
+     <string name="winemu_game_manage">ゲームの管理</string>
+     <string name="winemu_game_num">ゲームの数</string>
 -    <string name="winemu_game_price">ゲーム価格(￥)</string>
-+    <string name="winemu_game_price">Game Price ($)</string>
++    <string name="winemu_game_price">ゲームの価格(￥)</string>
      <string name="winemu_get_config_detail_failure">Failed to obtain the configuration scheme</string>
-     <string name="winemu_gpu_driver">GPU Driver</string>
-     <string name="winemu_guide_login_tips">Sync Steam play data, click to log in to your Steam account</string>
+     <string name="winemu_gpu_driver">GPUドライバ</string>
+     <string name="winemu_guide_login_tips">Steamのプレイデータを同期するにはクリックして、Steamアカウントにログインしてください</string>
 @@ -3448,6 +3448,27 @@
-     <string name="winemu_sidebar_key_map_alpha">Touch Control Opacity</string>
-     <string name="winemu_sidebar_key_mapping">Input Mapping</string>
-     <string name="winemu_sidebar_key_mouse_speed">Mouse Speed</string>
-+    <string name="winemu_sidebar_rts_touch_controls">RTS Touch Controls</string>
-+    <string name="rts_gesture_settings">RTS Gesture Settings</string>
-+    <string name="rts_gesture_settings_title">RTS Gesture Settings</string>
-+    <string name="rts_gesture_settings_close">Close</string>
-+    <string name="rts_gesture_settings_reset">Reset to Defaults</string>
-+    <string name="rts_gesture_tap">Tap</string>
-+    <string name="rts_gesture_long_press">Long Press (300ms)</string>
-+    <string name="rts_gesture_double_tap">Double-Tap</string>
-+    <string name="rts_gesture_drag">Drag Finger</string>
-+    <string name="rts_gesture_pinch">Pinch In/Out</string>
-+    <string name="rts_gesture_two_finger_drag">Two-Finger Drag</string>
-+    <string name="rts_action_left_click">Left Click</string>
-+    <string name="rts_action_right_click">Right Click</string>
-+    <string name="rts_action_double_left_click">Double Left Click</string>
-+    <string name="rts_action_drag_left_click">Drag Left Click</string>
-+    <string name="rts_action_scroll_wheel">Mouse Wheel Scroll</string>
-+    <string name="rts_action_plus_minus">+/- Keys</string>
-+    <string name="rts_action_page_up_down">Page Up/Down</string>
-+    <string name="rts_action_middle_mouse">Middle Mouse Button</string>
-+    <string name="rts_action_wasd_keys">WASD Keys</string>
-+    <string name="rts_action_arrow_keys">Arrow Keys</string>
-     <string name="winemu_sidebar_performance">Performance</string>
-     <string name="winemu_sidebar_screen_brightness">Screen Brightness</string>
-     <string name="winemu_sidebar_switch_input_mapping">Switch Touch Control Layout</string>
+     <string name="winemu_sidebar_key_map_alpha">タッチコントロールの不透明度</string>
+     <string name="winemu_sidebar_key_mapping">入力のマッピング</string>
+     <string name="winemu_sidebar_key_mouse_speed">マウスの速度</string>
++    <string name="winemu_sidebar_rts_touch_controls">RTSタッチコントロール</string>
++    <string name="rts_gesture_settings">RTSジェスチャー設定</string>
++    <string name="rts_gesture_settings_title">RTSジェスチャー設定</string>
++    <string name="rts_gesture_settings_close">閉じる</string>
++    <string name="rts_gesture_settings_reset">デフォルトにリセット</string>
++    <string name="rts_gesture_tap">タップ</string>
++    <string name="rts_gesture_long_press">長押し(300ミリ秒)</string>
++    <string name="rts_gesture_double_tap">ダブルタップ</string>
++    <string name="rts_gesture_drag">指でドラッグ</string>
++    <string name="rts_gesture_pinch">ピンチ イン/アウト</string>
++    <string name="rts_gesture_two_finger_drag">二本指でドラッグ</string>
++    <string name="rts_action_left_click">左クリック</string>
++    <string name="rts_action_right_click">右クリック</string>
++    <string name="rts_action_double_left_click">左ダブルクリック</string>
++    <string name="rts_action_drag_left_click">左ドラッグクリック</string>
++    <string name="rts_action_scroll_wheel">マウスホイールスクロール</string>
++    <string name="rts_action_plus_minus">+/- キー</string>
++    <string name="rts_action_page_up_down">ページ アップ/ダウン</string>
++    <string name="rts_action_middle_mouse">マウスの中央ボタン</string>
++    <string name="rts_action_wasd_keys">WASDキー</string>
++    <string name="rts_action_arrow_keys">矢印キー</string>
+     <string name="winemu_sidebar_performance">パフォーマンス</string>
+     <string name="winemu_sidebar_screen_brightness">画面の明るさ</string>
+     <string name="winemu_sidebar_switch_input_mapping">タッチコントロールレイアウトを切り替え</string>

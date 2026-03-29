@@ -9,7 +9,7 @@
      <string name="app_update_click_hint">クリックでインストール</string>
      <string name="app_update_close">閉じる</string>
 @@ -787,7 +787,7 @@
-     <string name="fetching_info">情報を取得</string>
+     <string name="fetching_info">情報を取得中</string>
      <string name="firmware_no_support_gtouch_hint">現在のファームウェアはG-Touchに非対応です。プレイする前にファームウェアをアップデートしてください。</string>
      <string name="first_save_config_tips">始めに設定を保存してください</string>
 -    <string name="follow_system">システムに従う</string>

@@ -25,7 +25,7 @@
 +    <string name="llauncher_home_pc_emulator_join_us_tips">テレメトリの削除に関する報告とその舞台裏をご覧ください >>></string>
      <string name="llauncher_home_pc_emulator_tips">PCゲームをインポートして、モバイルでAAAタイトルをプレイ</string>
      <string name="llauncher_home_pc_link_tips">PCを端末にストリーミングして、いつでもプレイ</string>
-     <string name="llauncher_home_pc_link_title">PC リンクリモートプレイ</string>
+     <string name="llauncher_home_pc_link_title">PCリンクリモートプレイ</string>
 @@ -1329,8 +1329,8 @@
      <string name="llauncher_main_page_menu_dialog_hide">ゲームを隠す</string>
      <string name="llauncher_main_page_menu_dialog_title">リストにあるゲームに対して、どの操作を行いますか？</string>

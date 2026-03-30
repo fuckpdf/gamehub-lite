@@ -77,7 +77,7 @@
      <string name="wheel_orientation">ホイールの方向</string>
      <string name="wheel_sensitivity">ホイールの感度</string>
 -    <string name="winemu_account_value">アカウント(¥)</string>
-+    <string name="winemu_account_value">アカウントの価値(¥)</string>
++    <string name="winemu_account_value">アカウントの価値(JPY)</string>
      <string name="winemu_add">追加</string>
      <string name="winemu_add_config">構成を追加</string>
      <string name="winemu_add_to_game_lib">ゲームライブラリに追加</string>
@@ -86,8 +86,8 @@
      <string name="winemu_game_manage">ゲームの管理</string>
      <string name="winemu_game_num">ゲームの数</string>
 -    <string name="winemu_game_price">ゲーム価格(￥)</string>
-+    <string name="winemu_game_price">ゲームの価格(￥)</string>
-     <string name="winemu_get_config_detail_failure">Failed to obtain the configuration scheme</string>
++    <string name="winemu_game_price">ゲームの価格(JPY)</string>
+     <string name="winemu_get_config_detail_failure">構成スキームの取得に失敗しました</string>
      <string name="winemu_gpu_driver">GPUドライバ</string>
      <string name="winemu_guide_login_tips">Steamのプレイデータを同期するにはクリックして、Steamアカウントにログインしてください</string>
 @@ -3448,6 +3448,27 @@

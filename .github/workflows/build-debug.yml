@@ -19,7 +19,7 @@ on:
 env:
   SOURCE_APK_URL: https://github.com/Producdevity/gamehub-lite/releases/download/v5.1.0-patch/GameHub-5.1.0.apk
   SOURCE_APK_MD5: 42db81116bf3c74e52e6f6afb4ec9f91
-  APKTOOL_VERSION: "2.10.0"
+  APKTOOL_VERSION: "2.12.1"
 
 jobs:
   build:

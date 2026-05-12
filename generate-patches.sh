@@ -8,11 +8,11 @@
 set -e
 
 # Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m'
+RED='[0;31m'
+GREEN='[0;32m'
+YELLOW='[1;33m'
+BLUE='[0;34m'
+NC='[0m'
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DECOMPILED_DIR="$SCRIPT_DIR/decompiled"
@@ -161,7 +161,7 @@ generate_patches() {
             dir=$(dirname "$PATCHES_DIR/binary_replacements/$file")
             mkdir -p "$dir"
             cp "$DECOMPILED_DIR/lite/$file" "$PATCHES_DIR/binary_replacements/$file"
-            ((binary_count++))
+            binary_count=$((binary_count+1))
         else
             # Generate unified diff for text files with portable paths
             dir=$(dirname "$PATCHES_DIR/diffs/$file")
@@ -171,7 +171,7 @@ generate_patches() {
                 --label "b/$file" \
                 "$DECOMPILED_DIR/original/$file" "$DECOMPILED_DIR/lite/$file" \
                 > "$PATCHES_DIR/diffs/$file.patch" 2>/dev/null || true
-            ((text_count++))
+            text_count=$((text_count+1))
         fi
     done < "$PATCHES_DIR/files_to_patch.txt"
 
@@ -189,7 +189,7 @@ copy_new_files() {
         mkdir -p "$dir"
         if [ -f "$DECOMPILED_DIR/lite/$file" ]; then
             cp "$DECOMPILED_DIR/lite/$file" "$PATCHES_DIR/new_files/$file"
-            ((count++))
+            count=$((count+1))
         fi
     done < "$PATCHES_DIR/files_to_add.txt"
 

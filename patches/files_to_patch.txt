@@ -162,6 +162,7 @@ smali_classes5/com/xj/landscape/launcher/LandscapeLauncherAppKt.smali
 smali_classes5/com/xj/landscape/launcher/config/EggGameApi.smali
 smali_classes5/com/xj/landscape/launcher/data/mock/MockUtilsKt.smali
 smali_classes5/com/xj/landscape/launcher/launcher/LauncherHelper.smali
+smali_classes5/com/xj/landscape/launcher/launcher/LauncherHelper$fetchStartTypeInfoAndSwitchModeInternal$2$1.smali
 smali_classes5/com/xj/landscape/launcher/launcher/strategy/PsRemotePlayLaunchStrategy.smali
 smali_classes5/com/xj/landscape/launcher/router/RouterUtils$checkGuideStep$1.smali
 smali_classes5/com/xj/landscape/launcher/router/RouterUtils.smali

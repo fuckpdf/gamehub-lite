@@ -153,6 +153,14 @@ check_dependencies() {
         missing+=("apksigner or jarsigner")
     fi
 
+    if ! command -v unzip &>/dev/null; then
+        missing+=("unzip")
+    fi
+
+    if ! command -v zip &>/dev/null; then
+        missing+=("zip")
+    fi
+
     if [ ${#missing[@]} -ne 0 ]; then
         print_error "Missing dependencies: ${missing[*]}"
         echo ""

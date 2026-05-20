@@ -62,6 +62,8 @@ res/layout/winemu_dialog_confirm_dialog.xml
 res/layout/winemu_dialog_game_circle_qr.xml
 res/layout/winemu_promotional_dialog.xml
 res/layout/winemu_reinstall_dep_dialog.xml
+res/layout/winemu_sidebar_controls_fragment.xml
+res/layout/winemu_sidebar_hub_type_fragment.xml
 res/layout/xja_dialog_advanced_features.xml
 res/layout-sw600dp/activity_button_setting.xml
 res/layout-sw600dp/llauncher_activity_guide_no_connected_dev.xml
@@ -133,6 +135,8 @@ smali_classes4/com/uc/crashsdk/a/d.smali
 smali_classes4/com/uc/crashsdk/a/g.smali
 smali_classes4/com/uc/crashsdk/b.smali
 smali_classes4/com/uc/crashsdk/export/CrashApi.smali
+smali_classes4/com/winemu/core/controller/X11Controller.smali
+smali_classes4/com/winemu/openapi/WinUIBridge.smali
 smali_classes4/com/xiaoji/egggame/wxapi/WXEntryActivity$getWXUserInfo$1.smali
 smali_classes4/com/xiaoji/module/operations/key/ConfigData.smali
 smali_classes4/com/xiaoji/module/operations/utility/Log.smali
@@ -157,6 +161,8 @@ smali_classes4/com/xj/game/ui/game_library/GameLibraryActivity.smali
 smali_classes4/com/xj/winemu/PcEmuSetupDialog.smali
 smali_classes4/com/xj/winemu/WineActivity.smali
 smali_classes4/com/xj/winemu/settings/models/PcGameSettingsKt.smali
+smali_classes4/com/xj/winemu/sidebar/SidebarControlsFragment.smali
+smali_classes4/com/xj/winemu/sidebar/SidebarPerformanceFragment.smali
 smali_classes5/com/xj/landscape/launcher/LandscapeLauncherApp.smali
 smali_classes5/com/xj/landscape/launcher/LandscapeLauncherAppKt.smali
 smali_classes5/com/xj/landscape/launcher/config/EggGameApi.smali
@@ -207,6 +213,7 @@ smali_classes5/com/xj/mapping/view/KeyboardViewNew.smali
 smali_classes5/com/xj/mapping/view/canvas/ExShape.smali
 smali_classes5/com/xj/module_pcstream/view/PcStreamCheckNetDialog$onCreateDialog$3$1.smali
 smali_classes5/com/xj/ota/data/repository/BaseOTARepository.smali
+smali_classes5/com/xj/pcvirtualbtn/inputcontrols/InputControlsManager.smali
 smali_classes5/com/xj/standalone/steam/wrapper/apis/XjSteamPlayerApi.smali
 smali_classes5/com/xj/umeng/DataBinderMapperImpl.smali
 smali_classes5/com/xj/umeng/soa/IUmengServiceImpl.smali
@@ -224,8 +231,3 @@ smali_classes7/org/repackage/com/zui/opendeviceidlibrary/OpenDeviceId.smali
 smali_classes7/org/slf4j/helpers/Util.smali
 smali_classes7/tv/danmaku/ijk/media/exo2/CacheHelper.smali
 smali_classes7/tv/danmaku/ijk/media/exo2/ExoSourceManager.smali
-smali_classes4/com/xj/winemu/sidebar/SidebarControlsFragment.smali
-smali_classes5/com/xj/pcvirtualbtn/inputcontrols/InputControlsManager.smali
-res/layout/winemu_sidebar_controls_fragment.xml
-smali_classes4/com/winemu/core/controller/X11Controller.smali
-smali_classes4/com/winemu/openapi/WinUIBridge.smali

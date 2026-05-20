@@ -334,6 +334,33 @@ rebuild_apk() {
     apktool b "$WORK_DIR/decompiled" -o "$WORK_DIR/unsigned.apk" 2>&1 | tail -5
 
     print_success "APK rebuilt"
+
+    inject_extension_dex
+}
+
+# Inject pre-built Java extension dex (extension/*.java -> classes.dex)
+# Caller (CI) sets EXTENSION_DEX_PATH to the path of the compiled classes.dex.
+# Detects next free classesN.dex slot in the APK and zips ours in.
+inject_extension_dex() {
+    if [ -z "$EXTENSION_DEX_PATH" ] || [ ! -f "$EXTENSION_DEX_PATH" ]; then
+        return 0
+    fi
+
+    print_step "Injecting extension dex from $EXTENSION_DEX_PATH..."
+
+    # Find next free classesN.dex slot
+    local next=2
+    while unzip -l "$WORK_DIR/unsigned.apk" 2>/dev/null | grep -qE "classes${next}\.dex$"; do
+        next=$((next + 1))
+    done
+
+    local tmp_dir
+    tmp_dir=$(mktemp -d)
+    cp "$EXTENSION_DEX_PATH" "$tmp_dir/classes${next}.dex"
+    (cd "$tmp_dir" && zip -j -q "$WORK_DIR/unsigned.apk" "classes${next}.dex")
+    rm -rf "$tmp_dir"
+
+    print_success "Extension dex injected as classes${next}.dex"
 }
 
 align_apk() {

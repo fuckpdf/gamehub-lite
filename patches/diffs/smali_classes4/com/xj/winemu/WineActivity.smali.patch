@@ -1,25 +1,32 @@
 --- a/smali_classes4/com/xj/winemu/WineActivity.smali
 +++ b/smali_classes4/com/xj/winemu/WineActivity.smali
-@@ -79,6 +79,10 @@
- .field public s:Lcom/xj/pcvirtualbtn/inputcontrols/InputControlsManager;
+@@ -24,6 +24,8 @@
+ # static fields
+ .field public static final N:Lcom/xj/winemu/WineActivity$Companion;
+ 
++.field public static t1:Lcom/xj/winemu/WineActivity;
++
+ 
+ # instance fields
+ .field public A:Lkotlinx/coroutines/Job;
+@@ -80,6 +82,8 @@
  
  .field public t:Lcom/xj/pcvirtualbtn/inputcontrols/InputControlsView;
-+
+ 
 +.field public t0:Lcom/xj/winemu/view/RtsTouchOverlayView;
 +
-+.field public static t1:Lcom/xj/winemu/WineActivity;
- 
  .field public u:Lcom/xj/winemu/utils/WineGameUsageTracker;
  
-@@ -605,8 +609,6 @@
-     invoke-virtual {v1}, Lcom/winemu/openapi/WinUIBridge;->V()Z
+ .field public final v:F
+@@ -606,8 +610,6 @@
  
      move-result v0
--
--    if-eqz v0, :cond_5
  
+-    if-eqz v0, :cond_5
+-
      invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->q2()V
  
+     goto :goto_1
 @@ -615,7 +617,6 @@
      :cond_4
      invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->q2()V
@@ -28,186 +35,219 @@
      :goto_1
      return-void
  .end method
-@@ -3473,7 +3474,7 @@
+@@ -1835,6 +1836,98 @@
+     return-object p0
+ .end method
+ 
++.method public static toggleRtsTouchOverlay(Z)V
++    .locals 6
++
++    sget-object v0, Lcom/xj/winemu/WineActivity;->t1:Lcom/xj/winemu/WineActivity;
++
++    if-eqz v0, :cond_6
++
++    iget-object v1, v0, Lcom/xj/winemu/WineActivity;->t0:Lcom/xj/winemu/view/RtsTouchOverlayView;
++
++    if-eqz v1, :cond_6
++
++    if-eqz p0, :cond_3
++
++    const/4 v4, 0x0
++
++    invoke-virtual {v1, v4}, Landroid/view/View;->setVisibility(I)V
++
++    const/4 v4, 0x1
++
++    invoke-virtual {v1, v4}, Landroid/view/View;->setEnabled(Z)V
++
++    invoke-virtual {v1, v4}, Landroid/view/View;->setClickable(Z)V
++
++    iget-object v2, v0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
++
++    if-eqz v2, :cond_0
++
++    const/4 v3, 0x0
++
++    invoke-virtual {v2, v3}, Lcom/winemu/openapi/WinUIBridge;->k0(Z)V
++
++    :cond_0
++    iget-object v2, v0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
++
++    if-eqz v2, :cond_1
++
++    invoke-virtual {v2}, Lcom/xj/winemu/api/bean/WineActivityData;->e()Ljava/lang/String;
++
++    move-result-object v2
++
++    if-nez v2, :cond_2
++
++    :cond_1
++    const/4 v2, 0x0
++
++    :cond_2
++    const/4 v5, 0x0
++
++    invoke-static {v5, v2}, Lcom/xj/pcvirtualbtn/inputcontrols/InputControlsManager;->h(ZLjava/lang/String;)V
++
++    goto :goto_0
++
++    :cond_3
++    const/4 v4, 0x4
++
++    invoke-virtual {v1, v4}, Landroid/view/View;->setVisibility(I)V
++
++    const/4 v4, 0x0
++
++    invoke-virtual {v1, v4}, Landroid/view/View;->setEnabled(Z)V
++
++    invoke-virtual {v1, v4}, Landroid/view/View;->setClickable(Z)V
++
++    iget-object v2, v0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
++
++    if-eqz v2, :cond_6
++
++    iget-object v3, v0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
++
++    if-eqz v3, :cond_4
++
++    invoke-virtual {v3}, Lcom/xj/winemu/api/bean/WineActivityData;->e()Ljava/lang/String;
++
++    move-result-object v3
++
++    if-nez v3, :cond_5
++
++    :cond_4
++    const/4 v3, 0x0
++
++    :cond_5
++    invoke-static {v3}, Lcom/xj/pcvirtualbtn/inputcontrols/InputControlsManager;->B(Ljava/lang/String;)Z
++
++    move-result v4
++
++    invoke-virtual {v2, v4}, Lcom/winemu/openapi/WinUIBridge;->k0(Z)V
++
++    :cond_6
++    :goto_0
++    return-void
++.end method
++
+ .method public static synthetic u1(Lcom/xj/winemu/WineActivity;)Lkotlin/Unit;
+     .locals 0
+ 
+@@ -3473,15 +3566,15 @@
  .end method
  
  .method public final g2(Z)V
 -    .locals 4
 +    .locals 6
  
-     if-eqz p1, :cond_4
+-    if-eqz p1, :cond_4
++    if-eqz p1, :cond_8
  
-@@ -3551,10 +3552,84 @@
-     :goto_0
-     iget-object p1, v2, Lcom/xj/winemu/databinding/ActivityWineBinding;->btnLayout:Landroid/widget/FrameLayout;
+     invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->m2()V
  
-+    # Add InputControlsView (buttons) FIRST
-     iget-object v0, p0, Lcom/xj/winemu/WineActivity;->t:Lcom/xj/pcvirtualbtn/inputcontrols/InputControlsView;
--
+     iget-object p1, p0, Lcom/xj/winemu/WineActivity;->s:Lcom/xj/pcvirtualbtn/inputcontrols/InputControlsManager;
+ 
+-    if-nez p1, :cond_3
++    if-nez p1, :cond_7
+ 
+     new-instance p1, Lcom/xj/pcvirtualbtn/inputcontrols/InputControlsManager;
+ 
+@@ -3555,15 +3648,90 @@
+ 
      invoke-virtual {p1, v0}, Landroid/view/ViewGroup;->addView(Landroid/view/View;)V
-+
-+    # Create and add RtsTouchOverlayView ON TOP (after buttons)
+ 
+-    :cond_3
+-    invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->X2()V
 +    new-instance v1, Lcom/xj/winemu/view/RtsTouchOverlayView;
 +
 +    invoke-direct {v1, p0}, Lcom/xj/winemu/view/RtsTouchOverlayView;-><init>(Landroid/content/Context;)V
 +
-+    # Set the WinUIBridge on the overlay
 +    iget-object v2, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
 +
 +    iput-object v2, v1, Lcom/xj/winemu/view/RtsTouchOverlayView;->a:Lcom/winemu/openapi/WinUIBridge;
-+    
-+    # Set the buttons view reference so overlay can forward touches
++
 +    iput-object v0, v1, Lcom/xj/winemu/view/RtsTouchOverlayView;->b:Landroid/view/View;
 +
-+    # Make the overlay clickable so it receives touch events
 +    const/4 v2, 0x1
++
 +    invoke-virtual {v1, v2}, Landroid/view/View;->setClickable(Z)V
 +
-+    # Store the overlay in the field
 +    iput-object v1, p0, Lcom/xj/winemu/WineActivity;->t0:Lcom/xj/winemu/view/RtsTouchOverlayView;
 +
-+    # Create MATCH_PARENT layout params (-1 = MATCH_PARENT)
 +    new-instance v2, Landroid/view/ViewGroup$LayoutParams;
++
 +    const/4 v3, -0x1
++
 +    invoke-direct {v2, v3, v3}, Landroid/view/ViewGroup$LayoutParams;-><init>(II)V
-+    
-+    # Add overlay to btnLayout ON TOP (buttons already added)
++
 +    invoke-virtual {p1, v1, v2}, Landroid/view/ViewGroup;->addView(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V
 +
-+    # Check saved setting and set initial visibility (static method)
 +    invoke-static {}, Lcom/xj/pcvirtualbtn/inputcontrols/InputControlsManager;->getRtsTouchControlsEnabled()Z
 +
 +    move-result v2
++
 +    move v4, v2
 +
-+    if-eqz v2, :cond_rts_hide
++    if-eqz v2, :cond_3
 +
-+    # RTS enabled - set visibility VISIBLE (0)
 +    const/4 v2, 0x0
- 
++
 +    invoke-virtual {v1, v2}, Landroid/view/View;->setVisibility(I)V
-+
-+    goto :goto_rts_done
-+
-+    :cond_rts_hide
-+    # RTS disabled - set visibility GONE (8)
+ 
+     goto :goto_1
+ 
++    :cond_3
 +    const/16 v2, 0x8
 +
 +    invoke-virtual {v1, v2}, Landroid/view/View;->setVisibility(I)V
 +
-+    :goto_rts_done
-+    # If RTS is enabled on startup, disable Screen Trackpad input immediately
-+    if-eqz v4, :cond_after_init_trackpad
-+    iget-object v2, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
-+    if-eqz v2, :cond_after_init_trackpad
-+    const/4 v3, 0x0
-+    invoke-virtual {v2, v3}, Lcom/winemu/openapi/WinUIBridge;->k0(Z)V
-+    # Persistently turn off Screen Trackpad for current profile when RTS starts enabled
-+    iget-object v2, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
-+    if-eqz v2, :cond_profile_null_init
-+    invoke-virtual {v2}, Lcom/xj/winemu/api/bean/WineActivityData;->e()Ljava/lang/String;
-+    move-result-object v2
-+    if-nez v2, :cond_have_profile_init
++    :goto_1
++    if-eqz v4, :cond_6
 +
-+    :cond_profile_null_init
++    iget-object v2, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
++
++    if-eqz v2, :cond_6
++
++    const/4 v3, 0x0
++
++    invoke-virtual {v2, v3}, Lcom/winemu/openapi/WinUIBridge;->k0(Z)V
++
++    iget-object v2, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
++
++    if-eqz v2, :cond_4
++
++    invoke-virtual {v2}, Lcom/xj/winemu/api/bean/WineActivityData;->e()Ljava/lang/String;
++
++    move-result-object v2
++
++    if-nez v2, :cond_5
++
+     :cond_4
 +    const/4 v2, 0x0
 +
-+    :cond_have_profile_init
++    :cond_5
 +    const/4 v5, 0x0
++
 +    invoke-static {v5, v2}, Lcom/xj/pcvirtualbtn/inputcontrols/InputControlsManager;->h(ZLjava/lang/String;)V
 +
-+    :cond_after_init_trackpad
-+    # Store this activity instance to static field for toggle access
++    :cond_6
 +    sput-object p0, Lcom/xj/winemu/WineActivity;->t1:Lcom/xj/winemu/WineActivity;
 +
-     :cond_3
-     invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->X2()V
++    :cond_7
++    invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->X2()V
++
++    goto :goto_2
++
++    :cond_8
+     invoke-direct {p0}, Lcom/xj/winemu/WineActivity;->z2()V
  
-@@ -3567,6 +3642,83 @@
+-    :goto_1
++    :goto_2
      return-void
  .end method
  
-+.method public static toggleRtsTouchOverlay(Z)V
-+    .locals 6
-+    
-+    # Get the static activity instance
-+    sget-object v0, Lcom/xj/winemu/WineActivity;->t1:Lcom/xj/winemu/WineActivity;
-+    
-+    if-eqz v0, :cond_end
-+    
-+    # Get the overlay view
-+    iget-object v1, v0, Lcom/xj/winemu/WineActivity;->t0:Lcom/xj/winemu/view/RtsTouchOverlayView;
-+    
-+    if-eqz v1, :cond_end
-+    
-+    # Check if enabling or disabling
-+    if-eqz p0, :cond_hide
-+    
-+    # Enable - set VISIBLE (0), ENABLED, and CLICKABLE
-+    const/4 v4, 0x0
-+    invoke-virtual {v1, v4}, Landroid/view/View;->setVisibility(I)V
-+    const/4 v4, 0x1
-+    invoke-virtual {v1, v4}, Landroid/view/View;->setEnabled(Z)V
-+    invoke-virtual {v1, v4}, Landroid/view/View;->setClickable(Z)V
-+
-+    # Disable Screen Trackpad input while RTS overlay is enabled
-+    iget-object v2, v0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
-+    if-eqz v2, :cond_after_enable
-+    const/4 v3, 0x0
-+    invoke-virtual {v2, v3}, Lcom/winemu/openapi/WinUIBridge;->k0(Z)V
-+
-+    :cond_after_enable
-+    # Persistently turn off Screen Trackpad for current profile while RTS is active
-+    iget-object v2, v0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
-+    if-eqz v2, :cond_profile_null_enable
-+    invoke-virtual {v2}, Lcom/xj/winemu/api/bean/WineActivityData;->e()Ljava/lang/String;
-+    move-result-object v2
-+    if-nez v2, :cond_have_profile_enable
-+
-+    :cond_profile_null_enable
-+    const/4 v2, 0x0
-+
-+    :cond_have_profile_enable
-+    const/4 v5, 0x0
-+    invoke-static {v5, v2}, Lcom/xj/pcvirtualbtn/inputcontrols/InputControlsManager;->h(ZLjava/lang/String;)V
-+    
-+    goto :cond_end
-+    
-+    :cond_hide
-+    # Disable - set INVISIBLE (4), DISABLED, and non-CLICKABLE so normal trackpad works
-+    const/4 v4, 0x4
-+    invoke-virtual {v1, v4}, Landroid/view/View;->setVisibility(I)V
-+    const/4 v4, 0x0
-+    invoke-virtual {v1, v4}, Landroid/view/View;->setEnabled(Z)V
-+    invoke-virtual {v1, v4}, Landroid/view/View;->setClickable(Z)V
-+
-+    # Restore Screen Trackpad input based on current profile when RTS overlay is disabled
-+    iget-object v2, v0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
-+    if-eqz v2, :cond_end
-+
-+    # Get current profile id
-+    iget-object v3, v0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
-+    if-eqz v3, :cond_profile_null
-+    invoke-virtual {v3}, Lcom/xj/winemu/api/bean/WineActivityData;->e()Ljava/lang/String;
-+    move-result-object v3
-+    if-nez v3, :cond_have_profile
-+
-+    :cond_profile_null
-+    const/4 v3, 0x0
-+
-+    :cond_have_profile
-+    invoke-static {v3}, Lcom/xj/pcvirtualbtn/inputcontrols/InputControlsManager;->B(Ljava/lang/String;)Z
-+    move-result v4
-+    invoke-virtual {v2, v4}, Lcom/winemu/openapi/WinUIBridge;->k0(Z)V
-+    
-+    :cond_end
-+    return-void
-+.end method
-+
- .method public final g3(Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-     .locals 3
- 
-@@ -4105,10 +4257,70 @@
+@@ -4105,10 +4273,72 @@
  .end method
  
  .method public onCreate(Landroid/os/Bundle;)V
@@ -215,6 +255,8 @@
 +    .locals 12
  
      invoke-super {p0, p1}, Lcom/xj/common/view/focus/focus/app/FocusableAppCompatActivity;->onCreate(Landroid/os/Bundle;)V
+ 
++    invoke-static {p0}, Lcom/xj/winemu/sidebar/BhFrameGenWriter;->applyFromPrefs(Landroid/content/Context;)V
 +
 +    sget v2, Landroid/os/Build$VERSION;->SDK_INT:I
 +
@@ -246,7 +288,7 @@
 +    invoke-virtual {p0, v2}, Landroid/app/Activity;->getSystemService(Ljava/lang/Class;)Ljava/lang/Object;
 +
 +    move-result-object v2
- 
++
 +    check-cast v2, Landroid/os/PerformanceHintManager;
 +
 +    if-eqz v2, :cond_1
@@ -279,7 +321,7 @@
      invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->S2()V
  
      invoke-virtual {p0}, Landroid/app/Activity;->getWindow()Landroid/view/Window;
-@@ -4137,13 +4349,13 @@
+@@ -4137,13 +4367,13 @@
  
      const/4 v1, 0x0
  
@@ -295,7 +337,7 @@
      invoke-virtual {p1}, Lcom/xj/winemu/databinding/ActivityWineBinding;->getRoot()Lcom/xj/common/view/focus/InterceptFocusEventConstraintLayout;
  
      move-result-object p1
-@@ -4152,13 +4364,13 @@
+@@ -4152,13 +4382,13 @@
  
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->g:Lcom/xj/winemu/databinding/ActivityWineBinding;
  
@@ -311,7 +353,7 @@
      iget-object p1, p1, Lcom/xj/winemu/databinding/ActivityWineBinding;->rootView:Lcom/xj/common/view/focus/InterceptFocusEventConstraintLayout;
  
      const-string v2, "rootView"
-@@ -4193,20 +4405,20 @@
+@@ -4193,20 +4423,20 @@
  
      iget-object v2, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
  
@@ -336,7 +378,7 @@
      :goto_0
      invoke-direct {p1, v3}, Lcom/xj/winemu/utils/WineInGameSettings;-><init>(Ljava/lang/String;)V
  
-@@ -4216,13 +4428,13 @@
+@@ -4216,13 +4446,13 @@
  
      const/4 v2, 0x0
  
@@ -352,7 +394,7 @@
  
      const-class v3, Lcom/xj/winemu/api/bean/IWinEmuService;
  
-@@ -4234,7 +4446,7 @@
+@@ -4234,7 +4464,7 @@
  
      check-cast v3, Lcom/xj/winemu/api/bean/IWinEmuService;
  
@@ -361,7 +403,7 @@
  
      invoke-interface {v3, p1}, Lcom/xj/winemu/api/bean/IWinEmuService;->p(Ljava/lang/String;)Landroid/graphics/Bitmap;
  
-@@ -4242,21 +4454,21 @@
+@@ -4242,21 +4472,21 @@
  
      goto :goto_1
  
@@ -387,7 +429,7 @@
      iget-object p1, p1, Lcom/xj/winemu/databinding/ActivityWineBinding;->ivGameLogo:Lcom/xj/base/view/RoundedImageView;
  
      sget v3, Lcom/xj/winemu/R$drawable;->wine_default_exe_icon:I
-@@ -4265,16 +4477,16 @@
+@@ -4265,16 +4495,16 @@
  
      goto :goto_2
  
@@ -407,7 +449,7 @@
      iget-object v3, v3, Lcom/xj/winemu/databinding/ActivityWineBinding;->ivGameLogo:Lcom/xj/base/view/RoundedImageView;
  
      invoke-virtual {v3, p1}, Landroidx/appcompat/widget/AppCompatImageView;->setImageBitmap(Landroid/graphics/Bitmap;)V
-@@ -4284,16 +4496,16 @@
+@@ -4284,16 +4514,16 @@
  
      goto :goto_3
  
@@ -427,7 +469,7 @@
      iget-object p1, p1, Lcom/xj/winemu/databinding/ActivityWineBinding;->ivGameLogo:Lcom/xj/base/view/RoundedImageView;
  
      sget v3, Lcom/xj/winemu/R$drawable;->wine_default_exe_icon:I
-@@ -4305,31 +4517,31 @@
+@@ -4305,31 +4535,31 @@
      :goto_3
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
  
@@ -464,7 +506,7 @@
      move p1, v2
  
      :goto_4
-@@ -4337,7 +4549,7 @@
+@@ -4337,7 +4567,7 @@
  
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
  
@@ -473,7 +515,7 @@
  
      invoke-virtual {p1}, Lcom/xj/winemu/api/bean/WineActivityData;->h()Ljava/lang/String;
  
-@@ -4345,26 +4557,26 @@
+@@ -4345,26 +4575,26 @@
  
      goto :goto_5
  
@@ -505,7 +547,7 @@
      :goto_6
      move p1, v3
  
-@@ -4373,16 +4585,16 @@
+@@ -4373,16 +4603,16 @@
  
      iput-boolean p1, p0, Lcom/xj/winemu/WineActivity;->I:Z
  
@@ -525,7 +567,7 @@
      iget-object p1, p1, Lcom/xj/winemu/databinding/ActivityWineBinding;->drawerWineSlider:Lcom/xj/winemu/sidebar/WineActivityDrawerContent;
  
      iget-object v3, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
-@@ -4391,13 +4603,13 @@
+@@ -4391,13 +4621,13 @@
  
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->g:Lcom/xj/winemu/databinding/ActivityWineBinding;
  
@@ -541,7 +583,7 @@
      iget-object p1, p1, Lcom/xj/winemu/databinding/ActivityWineBinding;->drawerWineSlider:Lcom/xj/winemu/sidebar/WineActivityDrawerContent;
  
      iget v3, p0, Lcom/xj/winemu/WineActivity;->v:F
-@@ -4406,13 +4618,13 @@
+@@ -4406,13 +4636,13 @@
  
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->g:Lcom/xj/winemu/databinding/ActivityWineBinding;
  
@@ -557,7 +599,7 @@
      iget-object p1, p1, Lcom/xj/winemu/databinding/ActivityWineBinding;->layoutXContainer:Landroid/widget/FrameLayout;
  
      const-string v3, "layoutXContainer"
-@@ -4431,7 +4643,7 @@
+@@ -4431,7 +4661,7 @@
  
      iget-object v4, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
  
@@ -566,7 +608,7 @@
  
      invoke-virtual {v4}, Lcom/xj/winemu/api/bean/WineActivityData;->g()Ljava/lang/String;
  
-@@ -4439,7 +4651,7 @@
+@@ -4439,7 +4669,7 @@
  
      goto :goto_8
  
@@ -575,7 +617,7 @@
      move-object v4, v1
  
      :goto_8
-@@ -4447,7 +4659,7 @@
+@@ -4447,7 +4677,7 @@
  
      iget-object v6, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
  
@@ -584,7 +626,7 @@
  
      invoke-virtual {v6}, Lcom/xj/winemu/api/bean/WineActivityData;->b()Z
  
-@@ -4459,7 +4671,7 @@
+@@ -4459,7 +4689,7 @@
  
      goto :goto_9
  
@@ -593,7 +635,7 @@
      move-object v6, v1
  
      :goto_9
-@@ -4503,13 +4715,13 @@
+@@ -4503,13 +4733,13 @@
  
      const-string v4, "winuiBridge"
  
@@ -609,7 +651,7 @@
      new-instance v5, Lcom/xj/winemu/n0;
  
      invoke-direct {v5, p0}, Lcom/xj/winemu/n0;-><init>(Lcom/xj/winemu/WineActivity;)V
-@@ -4518,13 +4730,13 @@
+@@ -4518,13 +4748,13 @@
  
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
  
@@ -625,7 +667,7 @@
      new-instance v5, Lcom/xj/winemu/o0;
  
      invoke-direct {v5, p0}, Lcom/xj/winemu/o0;-><init>(Lcom/xj/winemu/WineActivity;)V
-@@ -4533,13 +4745,13 @@
+@@ -4533,13 +4763,13 @@
  
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
  
@@ -641,7 +683,7 @@
      new-instance v5, Lcom/xj/winemu/p0;
  
      invoke-direct {v5, p0}, Lcom/xj/winemu/p0;-><init>(Lcom/xj/winemu/WineActivity;)V
-@@ -4549,7 +4761,7 @@
+@@ -4549,7 +4779,7 @@
      :try_start_0
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
  
@@ -650,7 +692,7 @@
  
      invoke-static {v4}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
  
-@@ -4562,28 +4774,28 @@
+@@ -4562,28 +4792,28 @@
  
      goto :goto_b
  
@@ -684,7 +726,7 @@
      iget-object v0, v5, Lcom/xj/winemu/databinding/ActivityWineBinding;->layoutXContainer:Landroid/widget/FrameLayout;
  
      invoke-static {v0, v3}, Lkotlin/jvm/internal/Intrinsics;->f(Ljava/lang/Object;Ljava/lang/String;)V
-@@ -4592,24 +4804,24 @@
+@@ -4592,24 +4822,24 @@
  
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
  
@@ -713,7 +755,7 @@
      invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->f3()V
  
      invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->C2()V
-@@ -4651,7 +4863,7 @@
+@@ -4651,7 +4881,7 @@
      :try_start_1
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
  
@@ -722,7 +764,7 @@
  
      invoke-static {v4}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
  
-@@ -4664,19 +4876,19 @@
+@@ -4664,19 +4894,19 @@
  
      goto/16 :goto_f
  
@@ -745,7 +787,7 @@
      new-instance v0, Lcom/xj/winemu/WineActivity$onCreate$8;
  
      invoke-direct {v0, p0}, Lcom/xj/winemu/WineActivity$onCreate$8;-><init>(Lcom/xj/winemu/WineActivity;)V
-@@ -4685,13 +4897,13 @@
+@@ -4685,13 +4915,13 @@
  
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
  
@@ -761,7 +803,7 @@
      new-instance v0, Lcom/xj/winemu/WineActivity$onCreate$9;
  
      invoke-direct {v0, p0}, Lcom/xj/winemu/WineActivity$onCreate$9;-><init>(Lcom/xj/winemu/WineActivity;)V
-@@ -4704,14 +4916,14 @@
+@@ -4704,14 +4934,14 @@
  
      const-string v0, "wineInGameSettingsSaver"
  
@@ -778,7 +820,7 @@
      invoke-virtual {p1}, Lcom/xj/winemu/utils/WineInGameSettings;->d()Lcom/xj/winemu/bean/FpsLimit;
  
      move-result-object p1
-@@ -4720,7 +4932,7 @@
+@@ -4720,7 +4950,7 @@
  
      move-result v3
  
@@ -787,7 +829,7 @@
  
      invoke-virtual {p1}, Lcom/xj/winemu/bean/FpsLimit;->getFpsLimit()I
  
-@@ -4734,7 +4946,7 @@
+@@ -4734,7 +4964,7 @@
  
      move-result v3
  
@@ -796,7 +838,7 @@
  
      new-instance v3, Ljava/lang/StringBuilder;
  
-@@ -4752,58 +4964,58 @@
+@@ -4752,58 +4982,58 @@
  
      invoke-static {v5, v3}, Lcom/xj/common/utils/XjLog;->c(Ljava/lang/String;Ljava/lang/String;)V
  
@@ -867,15 +909,3 @@
      invoke-virtual {v3}, Lcom/xj/winemu/utils/WineInGameSettings;->e()Z
  
      move-result v0
-@@ -5127,7 +5339,11 @@
- .method public onDestroy()V
-     .locals 1
- 
-     invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->x2()V
- 
-+    const/4 v0, 0x0
-+
-+    sput-object v0, Lcom/xj/winemu/WineActivity;->t1:Lcom/xj/winemu/WineActivity;
-+
-     :try_start_0
-     iget-object v0, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;

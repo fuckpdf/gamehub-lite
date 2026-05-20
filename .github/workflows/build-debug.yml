@@ -56,6 +56,33 @@ jobs:
           fi
           echo "MD5 verified: $md5"
 
+      - name: Set up Android SDK
+        if: hashFiles('extension/*.java') != ''
+        uses: android-actions/setup-android@v3
+        with:
+          packages: 'build-tools;34.0.0'
+
+      - name: Compile Java extension to classes.dex
+        if: hashFiles('extension/*.java') != ''
+        run: |
+          ANDROID_JAR="$ANDROID_SDK_ROOT/platforms/android-34/android.jar"
+          if [ ! -f "$ANDROID_JAR" ]; then
+            # Fallback: install platform 34 if missing
+            sdkmanager "platforms;android-34"
+          fi
+
+          mkdir -p ext_classes ext_dex
+          javac -source 8 -target 8 -cp "$ANDROID_JAR" -d ext_classes extension/*.java
+
+          BUILD_TOOLS=$(ls "$ANDROID_SDK_ROOT/build-tools" | sort -V | tail -1)
+          "$ANDROID_SDK_ROOT/build-tools/$BUILD_TOOLS/d8" \
+            --release \
+            --output ext_dex \
+            $(find ext_classes -name '*.class')
+
+          ls -la ext_dex/classes.dex
+          echo "EXTENSION_DEX_PATH=$GITHUB_WORKSPACE/ext_dex/classes.dex" >> "$GITHUB_ENV"
+
       - name: Build debug APK
         run: ./patch.sh
 

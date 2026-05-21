@@ -296,16 +296,16 @@
 +
 +    const-wide/16 v4, 0x3e8
 +
-+    :try_start_0
++    :try_start_3
 +    invoke-virtual {v3, v4, v5}, Landroid/os/PerformanceHintManager$Session;->reportActualWorkDuration(J)V
-+    :try_end_0
-+    .catch Ljava/lang/Throwable; {:try_start_0 .. :try_end_0} :catch_0
++    :try_end_3
++    .catch Ljava/lang/Throwable; {:try_start_3 .. :try_end_3} :catch_2
 +
 +    invoke-virtual {v3}, Landroid/os/PerformanceHintManager$Session;->close()V
 +
 +    goto :cond_1
 +
-+    :catch_0
++    :catch_2
 +    move-exception v7
 +
 +    invoke-virtual {v3}, Landroid/os/PerformanceHintManager$Session;->close()V

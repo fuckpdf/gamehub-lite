@@ -339,7 +339,10 @@ rebuild_apk() {
 
     mkdir -p "$OUTPUT_DIR"
 
-    apktool b "$WORK_DIR/decompiled" -o "$WORK_DIR/unsigned.apk" 2>&1 | tail -5
+    if ! apktool b "$WORK_DIR/decompiled" -o "$WORK_DIR/unsigned.apk"; then
+        print_error "apktool build failed"
+        return 1
+    fi
 
     print_success "APK rebuilt"
 

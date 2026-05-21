@@ -247,7 +247,7 @@
      return-void
  .end method
 
-@@ -4105,10 +4273,72 @@
+@@ -4105,10 +4273,65 @@
  .end method
 
  .method public onCreate(Landroid/os/Bundle;)V
@@ -258,25 +258,6 @@
 
 +    invoke-static {p0}, Lcom/xj/winemu/sidebar/BhFrameGenWriter;->applyFromPrefs(Landroid/content/Context;)V
 +
-+    sget v2, Landroid/os/Build$VERSION;->SDK_INT:I
-+
-+    const/16 v3, 0x1e
-+
-+    if-lt v2, v3, :cond_0
-+
-+    const-string v2, "power"
-+
-+    invoke-virtual {p0, v2}, Landroid/app/Activity;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
-+
-+    move-result-object v2
-+
-+    check-cast v2, Landroid/os/PowerManager;
-+
-+    const/4 v3, 0x5
-+
-+    invoke-virtual {v2, v3}, Landroid/os/PowerManager;->getThermalHeadroom(I)F
-+
-+    :cond_0
 +    sget v2, Landroid/os/Build$VERSION;->SDK_INT:I
 +
 +    const/16 v3, 0x1f
@@ -315,13 +296,25 @@
 +
 +    const-wide/16 v4, 0x3e8
 +
++    :try_start_0
 +    invoke-virtual {v3, v4, v5}, Landroid/os/PerformanceHintManager$Session;->reportActualWorkDuration(J)V
++    :try_end_0
++    .catch Ljava/lang/Throwable; {:try_start_0 .. :try_end_0} :catch_0
++
++    invoke-virtual {v3}, Landroid/os/PerformanceHintManager$Session;->close()V
++
++    goto :cond_1
++
++    :catch_0
++    move-exception v7
++
++    invoke-virtual {v3}, Landroid/os/PerformanceHintManager$Session;->close()V
 +
 +    :cond_1
      invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->S2()V
 
      invoke-virtual {p0}, Landroid/app/Activity;->getWindow()Landroid/view/Window;
-@@ -4137,13 +4367,13 @@
+@@ -4137,13 +4360,13 @@
 
      const/4 v1, 0x0
 
@@ -337,7 +330,7 @@
      invoke-virtual {p1}, Lcom/xj/winemu/databinding/ActivityWineBinding;->getRoot()Lcom/xj/common/view/focus/InterceptFocusEventConstraintLayout;
 
      move-result-object p1
-@@ -4152,13 +4382,13 @@
+@@ -4152,13 +4375,13 @@
 
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->g:Lcom/xj/winemu/databinding/ActivityWineBinding;
 
@@ -353,7 +346,7 @@
      iget-object p1, p1, Lcom/xj/winemu/databinding/ActivityWineBinding;->rootView:Lcom/xj/common/view/focus/InterceptFocusEventConstraintLayout;
 
      const-string v2, "rootView"
-@@ -4193,20 +4423,20 @@
+@@ -4193,20 +4416,20 @@
 
      iget-object v2, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
 
@@ -378,7 +371,7 @@
      :goto_0
      invoke-direct {p1, v3}, Lcom/xj/winemu/utils/WineInGameSettings;-><init>(Ljava/lang/String;)V
 
-@@ -4216,13 +4446,13 @@
+@@ -4216,13 +4439,13 @@
 
      const/4 v2, 0x0
 
@@ -394,7 +387,7 @@
 
      const-class v3, Lcom/xj/winemu/api/bean/IWinEmuService;
 
-@@ -4234,7 +4464,7 @@
+@@ -4234,7 +4457,7 @@
 
      check-cast v3, Lcom/xj/winemu/api/bean/IWinEmuService;
 
@@ -403,7 +396,7 @@
 
      invoke-interface {v3, p1}, Lcom/xj/winemu/api/bean/IWinEmuService;->p(Ljava/lang/String;)Landroid/graphics/Bitmap;
 
-@@ -4242,21 +4472,21 @@
+@@ -4242,21 +4465,21 @@
 
      goto :goto_1
 
@@ -429,7 +422,7 @@
      iget-object p1, p1, Lcom/xj/winemu/databinding/ActivityWineBinding;->ivGameLogo:Lcom/xj/base/view/RoundedImageView;
 
      sget v3, Lcom/xj/winemu/R$drawable;->wine_default_exe_icon:I
-@@ -4265,16 +4495,16 @@
+@@ -4265,16 +4488,16 @@
 
      goto :goto_2
 
@@ -449,7 +442,7 @@
      iget-object v3, v3, Lcom/xj/winemu/databinding/ActivityWineBinding;->ivGameLogo:Lcom/xj/base/view/RoundedImageView;
 
      invoke-virtual {v3, p1}, Landroidx/appcompat/widget/AppCompatImageView;->setImageBitmap(Landroid/graphics/Bitmap;)V
-@@ -4284,16 +4514,16 @@
+@@ -4284,16 +4507,16 @@
 
      goto :goto_3
 
@@ -469,7 +462,7 @@
      iget-object p1, p1, Lcom/xj/winemu/databinding/ActivityWineBinding;->ivGameLogo:Lcom/xj/base/view/RoundedImageView;
 
      sget v3, Lcom/xj/winemu/R$drawable;->wine_default_exe_icon:I
-@@ -4305,31 +4535,31 @@
+@@ -4305,31 +4528,31 @@
      :goto_3
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
 
@@ -506,7 +499,7 @@
      move p1, v2
 
      :goto_4
-@@ -4337,7 +4567,7 @@
+@@ -4337,7 +4560,7 @@
 
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
 
@@ -515,7 +508,7 @@
 
      invoke-virtual {p1}, Lcom/xj/winemu/api/bean/WineActivityData;->h()Ljava/lang/String;
 
-@@ -4345,26 +4575,26 @@
+@@ -4345,26 +4568,26 @@
 
      goto :goto_5
 
@@ -547,7 +540,7 @@
      :goto_6
      move p1, v3
 
-@@ -4373,16 +4603,16 @@
+@@ -4373,16 +4596,16 @@
 
      iput-boolean p1, p0, Lcom/xj/winemu/WineActivity;->I:Z
 
@@ -567,7 +560,7 @@
      iget-object p1, p1, Lcom/xj/winemu/databinding/ActivityWineBinding;->drawerWineSlider:Lcom/xj/winemu/sidebar/WineActivityDrawerContent;
 
      iget-object v3, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
-@@ -4391,13 +4621,13 @@
+@@ -4391,13 +4614,13 @@
 
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->g:Lcom/xj/winemu/databinding/ActivityWineBinding;
 
@@ -583,7 +576,7 @@
      iget-object p1, p1, Lcom/xj/winemu/databinding/ActivityWineBinding;->drawerWineSlider:Lcom/xj/winemu/sidebar/WineActivityDrawerContent;
 
      iget v3, p0, Lcom/xj/winemu/WineActivity;->v:F
-@@ -4406,13 +4636,13 @@
+@@ -4406,13 +4629,13 @@
 
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->g:Lcom/xj/winemu/databinding/ActivityWineBinding;
 
@@ -599,7 +592,7 @@
      iget-object p1, p1, Lcom/xj/winemu/databinding/ActivityWineBinding;->layoutXContainer:Landroid/widget/FrameLayout;
 
      const-string v3, "layoutXContainer"
-@@ -4431,7 +4661,7 @@
+@@ -4431,7 +4654,7 @@
 
      iget-object v4, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
 
@@ -608,7 +601,7 @@
 
      invoke-virtual {v4}, Lcom/xj/winemu/api/bean/WineActivityData;->g()Ljava/lang/String;
 
-@@ -4439,7 +4669,7 @@
+@@ -4439,7 +4662,7 @@
 
      goto :goto_8
 
@@ -617,7 +610,7 @@
      move-object v4, v1
 
      :goto_8
-@@ -4447,7 +4677,7 @@
+@@ -4447,7 +4670,7 @@
 
      iget-object v6, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
 
@@ -626,7 +619,7 @@
 
      invoke-virtual {v6}, Lcom/xj/winemu/api/bean/WineActivityData;->b()Z
 
-@@ -4459,7 +4689,7 @@
+@@ -4459,7 +4682,7 @@
 
      goto :goto_9
 
@@ -635,7 +628,7 @@
      move-object v6, v1
 
      :goto_9
-@@ -4503,13 +4733,13 @@
+@@ -4503,13 +4726,13 @@
 
      const-string v4, "winuiBridge"
 
@@ -651,7 +644,7 @@
      new-instance v5, Lcom/xj/winemu/n0;
 
      invoke-direct {v5, p0}, Lcom/xj/winemu/n0;-><init>(Lcom/xj/winemu/WineActivity;)V
-@@ -4518,13 +4748,13 @@
+@@ -4518,13 +4741,13 @@
 
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
 
@@ -667,7 +660,7 @@
      new-instance v5, Lcom/xj/winemu/o0;
 
      invoke-direct {v5, p0}, Lcom/xj/winemu/o0;-><init>(Lcom/xj/winemu/WineActivity;)V
-@@ -4533,13 +4763,13 @@
+@@ -4533,13 +4756,13 @@
 
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
 
@@ -683,7 +676,7 @@
      new-instance v5, Lcom/xj/winemu/p0;
 
      invoke-direct {v5, p0}, Lcom/xj/winemu/p0;-><init>(Lcom/xj/winemu/WineActivity;)V
-@@ -4549,7 +4779,7 @@
+@@ -4549,7 +4772,7 @@
      :try_start_0
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
 
@@ -692,7 +685,7 @@
 
      invoke-static {v4}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
 
-@@ -4562,28 +4792,28 @@
+@@ -4562,28 +4785,28 @@
 
      goto :goto_b
 
@@ -726,7 +719,7 @@
      iget-object v0, v5, Lcom/xj/winemu/databinding/ActivityWineBinding;->layoutXContainer:Landroid/widget/FrameLayout;
 
      invoke-static {v0, v3}, Lkotlin/jvm/internal/Intrinsics;->f(Ljava/lang/Object;Ljava/lang/String;)V
-@@ -4592,24 +4822,24 @@
+@@ -4592,24 +4815,24 @@
 
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
 
@@ -755,7 +748,7 @@
      invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->f3()V
 
      invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->C2()V
-@@ -4651,7 +4881,7 @@
+@@ -4651,7 +4874,7 @@
      :try_start_1
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
 
@@ -764,7 +757,7 @@
 
      invoke-static {v4}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
 
-@@ -4664,19 +4894,19 @@
+@@ -4664,19 +4887,19 @@
 
      goto/16 :goto_f
 
@@ -787,7 +780,7 @@
      new-instance v0, Lcom/xj/winemu/WineActivity$onCreate$8;
 
      invoke-direct {v0, p0}, Lcom/xj/winemu/WineActivity$onCreate$8;-><init>(Lcom/xj/winemu/WineActivity;)V
-@@ -4685,13 +4915,13 @@
+@@ -4685,13 +4908,13 @@
 
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
 
@@ -803,7 +796,7 @@
      new-instance v0, Lcom/xj/winemu/WineActivity$onCreate$9;
 
      invoke-direct {v0, p0}, Lcom/xj/winemu/WineActivity$onCreate$9;-><init>(Lcom/xj/winemu/WineActivity;)V
-@@ -4704,14 +4934,14 @@
+@@ -4704,14 +4927,14 @@
 
      const-string v0, "wineInGameSettingsSaver"
 
@@ -820,7 +813,7 @@
      invoke-virtual {p1}, Lcom/xj/winemu/utils/WineInGameSettings;->d()Lcom/xj/winemu/bean/FpsLimit;
 
      move-result-object p1
-@@ -4720,7 +4950,7 @@
+@@ -4720,7 +4943,7 @@
 
      move-result v3
 
@@ -829,7 +822,7 @@
 
      invoke-virtual {p1}, Lcom/xj/winemu/bean/FpsLimit;->getFpsLimit()I
 
-@@ -4734,7 +4964,7 @@
+@@ -4734,7 +4957,7 @@
 
      move-result v3
 
@@ -838,7 +831,7 @@
 
      new-instance v3, Ljava/lang/StringBuilder;
 
-@@ -4752,58 +4982,58 @@
+@@ -4752,58 +4975,58 @@
 
      invoke-static {v5, v3}, Lcom/xj/common/utils/XjLog;->c(Ljava/lang/String;Ljava/lang/String;)V
 

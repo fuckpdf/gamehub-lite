@@ -9,12 +9,9 @@ import java.io.FileOutputStream;
 import java.nio.charset.StandardCharsets;
 
 /**
- * Manages Vulkan ICD selection (libGameScopeVK.so vs libGameScopeV2.so)
- * and writes the correct per-package ICD JSON before Wine container launch.
- *
- * Preference key: "bh_vulkan_driver"
- *   "vk"  — libGameScopeVK.so (default, with BYPASS_XSERVER + FrameGen)
- *   "v2"  — libGameScopeV2.so (GPU spoofing, no BYPASS_XSERVER)
+ * Selects between libGameScopeVK.so (default, with BYPASS_XSERVER + FrameGen) and
+ * libGameScopeV2.so (GPU spoofing, no BYPASS_XSERVER) by writing one ICD JSON and
+ * removing the other before Wine container launch.
  */
 public class BhVulkanIcdWriter {
 
@@ -22,8 +19,6 @@ public class BhVulkanIcdWriter {
     private static final String KEY_DRIVER = "bh_vulkan_driver";
     public  static final String DRIVER_VK  = "vk";
     public  static final String DRIVER_V2  = "v2";
-
-    // ── Preference access ─────────────────────────────────────────────────────
 
     public static String getSelectedDriver(Context ctx) {
         return prefs(ctx).getString(KEY_DRIVER, DRIVER_VK);
@@ -41,10 +36,7 @@ public class BhVulkanIcdWriter {
         return new File(resolveV2LibraryPath(ctx)).exists();
     }
 
-    // ── Main entry point ──────────────────────────────────────────────────────
-
-    /** Write the correct ICD JSON based on user preference.
-     *  Deletes the inactive ICD JSON so Vulkan loader uses only one driver. */
+    /** Deletes the inactive ICD JSON so the Vulkan loader sees only the selected driver. */
     public static void ensureIcdJson(Context ctx) {
         if (isV2Selected(ctx) && isV2Available(ctx)) {
             ensureIcdJsonForPath(ctx, resolveV2LibraryPath(ctx), resolveV2JsonPath(ctx));
@@ -54,8 +46,6 @@ public class BhVulkanIcdWriter {
             deleteFile(resolveV2JsonPath(ctx));
         }
     }
-
-    // ── Path resolution ───────────────────────────────────────────────────────
 
     public static String resolveVkLibraryPath(Context ctx) {
         return dataPath(ctx) + "/files/usr/lib/libGameScopeVK.so";
@@ -74,8 +64,6 @@ public class BhVulkanIcdWriter {
         return dataPath(ctx)
                 + "/files/usr/home/steamuser/.config/vulkan/icd.d/GameScopeV2_icd.json";
     }
-
-    // ── ICD JSON writer ───────────────────────────────────────────────────────
 
     /** Idempotent: only writes if contents differ. No-op if .so is absent. */
     private static void ensureIcdJsonForPath(Context ctx, String libPath, String jsonPath) {
@@ -114,10 +102,8 @@ public class BhVulkanIcdWriter {
         try { new File(path).delete(); } catch (Exception ignored) {}
     }
 
-    // ── Helpers ───────────────────────────────────────────────────────────────
-
     private static String dataPath(Context ctx) {
-        return "/data/data/" + ctx.getPackageName();
+        return ctx.getApplicationInfo().dataDir;
     }
 
     private static SharedPreferences prefs(Context ctx) {

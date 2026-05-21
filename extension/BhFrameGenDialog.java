@@ -18,20 +18,11 @@ import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-/**
- * AI Frame Generation settings dialog. Programmatic UI mirrors the visual
- * style of RtsGestureConfigDialog (dark dim, rounded panel, blue close button).
- *
- * Every control writes to gamescope.control immediately and persists to
- * {@link BhFrameGenSettings} SharedPreferences. Settings are also re-applied
- * on every game launch via the BhFrameGenWriter launch hook.
- */
 public class BhFrameGenDialog extends Dialog {
 
     private final BhFrameGenSettings settings;
     private final String controlPath;
 
-    // Bound widgets we need to update from preset changes
     private SeekBar sbFlowScale;
     private TextView tvFlowScaleValue;
     private TextView tvPresetDesc;
@@ -60,7 +51,6 @@ public class BhFrameGenDialog extends Dialog {
         setContentView(buildContentView());
     }
 
-    // Outer dim layer
     private View buildContentView() {
         Context ctx = getContext();
 
@@ -68,7 +58,6 @@ public class BhFrameGenDialog extends Dialog {
         root.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 
-        // Centered panel
         LinearLayout panel = new LinearLayout(ctx);
         panel.setOrientation(LinearLayout.VERTICAL);
         FrameLayout.LayoutParams panelLp = new FrameLayout.LayoutParams(
@@ -85,9 +74,8 @@ public class BhFrameGenDialog extends Dialog {
         panel.setPadding(0, dp(8), 0, dp(8));
         root.addView(panel);
 
-        // Title
         TextView title = new TextView(ctx);
-        title.setText("AI Frame Generation");
+        title.setText(getStringByName("bh_framegen_title", "Frame Generation"));
         title.setTextColor(Color.WHITE);
         title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f);
         title.setGravity(Gravity.CENTER);
@@ -97,7 +85,6 @@ public class BhFrameGenDialog extends Dialog {
         title.setLayoutParams(titleLp);
         panel.addView(title);
 
-        // Scrollable body
         ScrollView scroll = new ScrollView(ctx);
         LinearLayout.LayoutParams scrollLp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -112,9 +99,8 @@ public class BhFrameGenDialog extends Dialog {
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         scroll.addView(body);
 
-        // ── Section 1: Preset slider ─────────────────────────────────────
         TextView presetHeader = new TextView(ctx);
-        presetHeader.setText("Preset");
+        presetHeader.setText(getStringByName("bh_framegen_dialog_preset", "Preset"));
         presetHeader.setTextColor(Color.WHITE);
         presetHeader.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f);
         presetHeader.setLayoutParams(headerLp());
@@ -175,13 +161,12 @@ public class BhFrameGenDialog extends Dialog {
 
         body.addView(divider());
 
-        // ── Section 2: flowScale slider ─────────────────────────────────
         LinearLayout flowHeaderRow = new LinearLayout(ctx);
         flowHeaderRow.setOrientation(LinearLayout.HORIZONTAL);
         flowHeaderRow.setLayoutParams(rowLp());
 
         TextView flowHeader = new TextView(ctx);
-        flowHeader.setText("Flow scale");
+        flowHeader.setText(getStringByName("bh_framegen_dialog_flow_scale", "Flow scale"));
         flowHeader.setTextColor(Color.WHITE);
         flowHeader.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f);
         LinearLayout.LayoutParams flowHeaderLp = new LinearLayout.LayoutParams(
@@ -215,13 +200,11 @@ public class BhFrameGenDialog extends Dialog {
         });
         body.addView(sbFlowScale);
 
-        // First-time UI sync
         updatePresetLabel();
         updatePresetDescription();
 
-        // ── Close button ─────────────────────────────────────────────────
         TextView btnClose = new TextView(ctx);
-        btnClose.setText("Close");
+        btnClose.setText(getStringByName("rts_gesture_settings_close", "Close"));
         btnClose.setTextColor(Color.parseColor("#fff0f0f0"));
         btnClose.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f);
         btnClose.setGravity(Gravity.CENTER);
@@ -238,7 +221,6 @@ public class BhFrameGenDialog extends Dialog {
         return root;
     }
 
-    // ── helpers ─────────────────────────────────────────────────────────
     private LinearLayout.LayoutParams rowLp() {
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -295,7 +277,8 @@ public class BhFrameGenDialog extends Dialog {
 
     private void updatePresetLabel() {
         if (tvPresetLabel == null) return;
-        tvPresetLabel.setText(settings.preset.label + " mode");
+        String suffix = getStringByName("bh_framegen_dialog_mode_suffix", " mode");
+        tvPresetLabel.setText(settings.preset.label + suffix);
     }
 
     private void updatePresetDescription() {
@@ -303,7 +286,12 @@ public class BhFrameGenDialog extends Dialog {
         tvPresetDesc.setText(settings.preset.description);
     }
 
-    /** Convenience launcher for the smali wiring patch. */
+    private String getStringByName(String name, String fallback) {
+        Context c = getContext();
+        int id = c.getResources().getIdentifier(name, "string", c.getPackageName());
+        return id != 0 ? c.getString(id) : fallback;
+    }
+
     public static void show(Context ctx) {
         try {
             BhFrameGenDialog d = new BhFrameGenDialog(ctx);

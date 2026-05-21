@@ -367,7 +367,7 @@ compile_extension_dex() {
     fi
 
     local android_jar
-    android_jar=$(ls -1 "$sdk_root"/platforms/android-*/android.jar 2>/dev/null | sort -V | tail -1)
+    android_jar=$(find "$sdk_root/platforms" -maxdepth 2 -name 'android.jar' -type f 2>/dev/null | sort -V | tail -1)
     if [ -z "$android_jar" ] || [ ! -f "$android_jar" ]; then
         print_error "android.jar not found under $sdk_root/platforms/."
         print_error "Install a platform, e.g. sdkmanager 'platforms;android-34'."
@@ -375,7 +375,7 @@ compile_extension_dex() {
     fi
 
     local d8_bin
-    d8_bin=$(ls -1 "$sdk_root"/build-tools/*/d8 2>/dev/null | sort -V | tail -1)
+    d8_bin=$(find "$sdk_root/build-tools" -maxdepth 2 -name 'd8' -type f 2>/dev/null | sort -V | tail -1)
     if [ -z "$d8_bin" ] || [ ! -x "$d8_bin" ]; then
         print_error "d8 not found under $sdk_root/build-tools/."
         print_error "Install build-tools, e.g. sdkmanager 'build-tools;34.0.0'."

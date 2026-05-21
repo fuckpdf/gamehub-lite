@@ -3,19 +3,10 @@ package com.xj.winemu.sidebar;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-/**
- * Global AI Frame Generation settings, persisted in SharedPreferences "bh_framegen".
- *
- * Wire format reference: GAMEHUB_600_MASTER_MAP § 26.8.3 (10-byte mmap protocol at
- * <imageFs>/etc/gamescope.control).
- *
- * Preset values mirror GameHub 6.0.1's AiFrameInterpolationMode enum (§ 26.8.1).
- */
 public class BhFrameGenSettings {
 
     public static final String PREFS = "bh_framegen";
 
-    /** Six AI Frame Generation presets, identical to GameHub 6.0.1's enabled-mode values. */
     public enum Preset {
         ECO  (0, 0.2f, "Eco",   "Lowest overhead, suitable for lower-end devices or battery-sensitive play."),
         FLOW (0, 0.4f, "Flow",  "Low overhead smoothness boost for most lightweight games."),
@@ -62,7 +53,6 @@ public class BhFrameGenSettings {
         ed.apply();
     }
 
-    /** Apply a preset's defaults to flowScale and model. Call save() after to persist. */
     public void applyPreset(Preset p) {
         this.preset = p;
         this.flowScale = p.flowScale;

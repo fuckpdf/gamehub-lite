@@ -36,6 +36,10 @@ public class BhVulkanIcdWriter {
         return new File(resolveV2LibraryPath(ctx)).exists();
     }
 
+    public static boolean isVkAvailable(Context ctx) {
+        return new File(resolveVkLibraryPath(ctx)).exists();
+    }
+
     /** Deletes the inactive ICD JSON so the Vulkan loader sees only the selected driver. */
     public static void ensureIcdJson(Context ctx) {
         if (isV2Selected(ctx) && isV2Available(ctx)) {

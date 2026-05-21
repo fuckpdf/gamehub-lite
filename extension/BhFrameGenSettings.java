@@ -8,23 +8,43 @@ public class BhFrameGenSettings {
     public static final String PREFS = "bh_framegen";
 
     public enum Preset {
-        ECO  (0, 0.2f, "Eco",   "Lowest overhead, suitable for lower-end devices or battery-sensitive play."),
-        FLOW (0, 0.4f, "Flow",  "Low overhead smoothness boost for most lightweight games."),
-        BAL  (0, 0.6f, "Bal",   "Recommended. Balances smoothness, power usage, and stability."),
-        BOOST(0, 0.8f, "Boost", "Stronger motion smoothing for users who prefer extra fluidity."),
-        CLEAR(1, 0.6f, "Clear", "Prioritizes a steadier, cleaner image with fewer motion artifacts."),
-        MAX  (1, 0.8f, "Max",   "Highest quality preset with the highest power and performance cost.");
+        ECO  (0, 0.2f, "bh_framegen_preset_eco_label",   "bh_framegen_preset_eco_desc",   "Eco",   "Lowest overhead, suitable for lower-end devices or battery-sensitive play."),
+        FLOW (0, 0.4f, "bh_framegen_preset_flow_label",  "bh_framegen_preset_flow_desc",  "Flow",  "Low overhead smoothness boost for most lightweight games."),
+        BAL  (0, 0.6f, "bh_framegen_preset_bal_label",   "bh_framegen_preset_bal_desc",   "Bal",   "Recommended. Balances smoothness, power usage, and stability."),
+        BOOST(0, 0.8f, "bh_framegen_preset_boost_label", "bh_framegen_preset_boost_desc", "Boost", "Stronger motion smoothing for users who prefer extra fluidity."),
+        CLEAR(1, 0.6f, "bh_framegen_preset_clear_label", "bh_framegen_preset_clear_desc", "Clear", "Prioritizes a steadier, cleaner image with fewer motion artifacts."),
+        MAX  (1, 0.8f, "bh_framegen_preset_max_label",   "bh_framegen_preset_max_desc",   "Max",   "Highest quality preset with the highest power and performance cost.");
 
         public final int model;        // byte 8: 0=standard, 1=clear/extreme
         public final float flowScale;  // bytes 4-7: float (0.2..1.0)
-        public final String label;
-        public final String description;
+        public final String labelResName;
+        public final String descResName;
+        public final String labelFallback;
+        public final String descFallback;
 
-        Preset(int model, float flowScale, String label, String description) {
+        Preset(int model, float flowScale,
+               String labelResName, String descResName,
+               String labelFallback, String descFallback) {
             this.model = model;
             this.flowScale = flowScale;
-            this.label = label;
-            this.description = description;
+            this.labelResName = labelResName;
+            this.descResName = descResName;
+            this.labelFallback = labelFallback;
+            this.descFallback = descFallback;
+        }
+
+        public String getLabel(Context ctx) {
+            return resolve(ctx, labelResName, labelFallback);
+        }
+
+        public String getDescription(Context ctx) {
+            return resolve(ctx, descResName, descFallback);
+        }
+
+        private static String resolve(Context ctx, String name, String fallback) {
+            if (ctx == null) return fallback;
+            int id = ctx.getResources().getIdentifier(name, "string", ctx.getPackageName());
+            return id != 0 ? ctx.getString(id) : fallback;
         }
     }
 

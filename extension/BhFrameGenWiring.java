@@ -25,10 +25,16 @@ public class BhFrameGenWiring {
         } catch (Throwable ignored) {}
     }
 
-    /** Idempotent — onResume can call repeatedly. */
     public static void bind(final View root) {
         if (root == null) return;
         final Context ctx = root.getContext();
+
+        final View container = viewById(root, "frame_gen_container");
+        if (!BhVulkanIcdWriter.isVkAvailable(ctx)) {
+            if (container != null) container.setVisibility(View.GONE);
+            return;
+        }
+        if (container != null) container.setVisibility(View.VISIBLE);
 
         final View gearButton = viewById(root, "btn_frame_gen_settings");
         final View switchView = viewById(root, "switch_frame_gen");
@@ -57,8 +63,7 @@ public class BhFrameGenWiring {
         }
     }
 
-    /** SidebarSwitchItemView (com.xj.winemu.view) renders the switch as an ImageView,
-     *  not a CompoundButton; driven through its public setSwitch(boolean). */
+    /** SidebarSwitchItemView is part of the patched app, not on this extension's classpath. */
     private static void invokeSetSwitch(View view, boolean value) {
         try {
             Method m = view.getClass().getMethod("setSwitch", boolean.class);

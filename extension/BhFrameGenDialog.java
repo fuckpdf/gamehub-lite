@@ -140,7 +140,7 @@ public class BhFrameGenDialog extends Dialog {
         presetTickRow.setLayoutParams(rowLp());
         for (BhFrameGenSettings.Preset p : BhFrameGenSettings.Preset.values()) {
             TextView tv = new TextView(ctx);
-            tv.setText(p.label);
+            tv.setText(p.getLabel(ctx));
             tv.setTextColor(Color.parseColor("#ff888e99"));
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 9f);
             tv.setGravity(Gravity.CENTER);
@@ -279,13 +279,14 @@ public class BhFrameGenDialog extends Dialog {
 
     private void updatePresetLabel() {
         if (tvPresetLabel == null) return;
+        Context ctx = getContext();
         String suffix = getStringByName("bh_framegen_dialog_mode_suffix", " mode");
-        tvPresetLabel.setText(settings.preset.label + suffix);
+        tvPresetLabel.setText(settings.preset.getLabel(ctx) + suffix);
     }
 
     private void updatePresetDescription() {
         if (tvPresetDesc == null) return;
-        tvPresetDesc.setText(settings.preset.description);
+        tvPresetDesc.setText(settings.preset.getDescription(getContext()));
     }
 
     private String getStringByName(String name, String fallback) {

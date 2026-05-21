@@ -3,34 +3,34 @@
 @@ -24,6 +24,8 @@
  # static fields
  .field public static final N:Lcom/xj/winemu/WineActivity$Companion;
- 
+
 +.field public static t1:Lcom/xj/winemu/WineActivity;
 +
- 
+
  # instance fields
  .field public A:Lkotlinx/coroutines/Job;
 @@ -80,6 +82,8 @@
- 
+
  .field public t:Lcom/xj/pcvirtualbtn/inputcontrols/InputControlsView;
- 
+
 +.field public t0:Lcom/xj/winemu/view/RtsTouchOverlayView;
 +
  .field public u:Lcom/xj/winemu/utils/WineGameUsageTracker;
- 
+
  .field public final v:F
 @@ -606,8 +610,6 @@
- 
+
      move-result v0
- 
+
 -    if-eqz v0, :cond_5
 -
      invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->q2()V
- 
+
      goto :goto_1
 @@ -615,7 +617,6 @@
      :cond_4
      invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->q2()V
- 
+
 -    :cond_5
      :goto_1
      return-void
@@ -38,7 +38,7 @@
 @@ -1835,6 +1836,98 @@
      return-object p0
  .end method
- 
+
 +.method public static toggleRtsTouchOverlay(Z)V
 +    .locals 6
 +
@@ -133,30 +133,30 @@
 +
  .method public static synthetic u1(Lcom/xj/winemu/WineActivity;)Lkotlin/Unit;
      .locals 0
- 
+
 @@ -3473,15 +3566,15 @@
  .end method
- 
+
  .method public final g2(Z)V
 -    .locals 4
 +    .locals 6
- 
+
 -    if-eqz p1, :cond_4
 +    if-eqz p1, :cond_8
- 
+
      invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->m2()V
- 
+
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->s:Lcom/xj/pcvirtualbtn/inputcontrols/InputControlsManager;
- 
+
 -    if-nez p1, :cond_3
 +    if-nez p1, :cond_7
- 
+
      new-instance p1, Lcom/xj/pcvirtualbtn/inputcontrols/InputControlsManager;
- 
+
 @@ -3555,15 +3648,90 @@
- 
+
      invoke-virtual {p1, v0}, Landroid/view/ViewGroup;->addView(Landroid/view/View;)V
- 
+
 -    :cond_3
 -    invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->X2()V
 +    new-instance v1, Lcom/xj/winemu/view/RtsTouchOverlayView;
@@ -194,9 +194,9 @@
 +    const/4 v2, 0x0
 +
 +    invoke-virtual {v1, v2}, Landroid/view/View;->setVisibility(I)V
- 
+
      goto :goto_1
- 
+
 +    :cond_3
 +    const/16 v2, 0x8
 +
@@ -241,21 +241,21 @@
 +
 +    :cond_8
      invoke-direct {p0}, Lcom/xj/winemu/WineActivity;->z2()V
- 
+
 -    :goto_1
 +    :goto_2
      return-void
  .end method
- 
+
 @@ -4105,10 +4273,72 @@
  .end method
- 
+
  .method public onCreate(Landroid/os/Bundle;)V
 -    .locals 10
 +    .locals 12
- 
+
      invoke-super {p0, p1}, Lcom/xj/common/view/focus/focus/app/FocusableAppCompatActivity;->onCreate(Landroid/os/Bundle;)V
- 
+
 +    invoke-static {p0}, Lcom/xj/winemu/sidebar/BhFrameGenWriter;->applyFromPrefs(Landroid/content/Context;)V
 +
 +    sget v2, Landroid/os/Build$VERSION;->SDK_INT:I
@@ -319,593 +319,593 @@
 +
 +    :cond_1
      invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->S2()V
- 
+
      invoke-virtual {p0}, Landroid/app/Activity;->getWindow()Landroid/view/Window;
 @@ -4137,13 +4367,13 @@
- 
+
      const/4 v1, 0x0
- 
+
 -    if-nez p1, :cond_0
 +    if-nez p1, :cond_2
- 
+
      invoke-static {v0}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object p1, v1
- 
+
 -    :cond_0
 +    :cond_2
      invoke-virtual {p1}, Lcom/xj/winemu/databinding/ActivityWineBinding;->getRoot()Lcom/xj/common/view/focus/InterceptFocusEventConstraintLayout;
- 
+
      move-result-object p1
 @@ -4152,13 +4382,13 @@
- 
+
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->g:Lcom/xj/winemu/databinding/ActivityWineBinding;
- 
+
 -    if-nez p1, :cond_1
 +    if-nez p1, :cond_3
- 
+
      invoke-static {v0}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object p1, v1
- 
+
 -    :cond_1
 +    :cond_3
      iget-object p1, p1, Lcom/xj/winemu/databinding/ActivityWineBinding;->rootView:Lcom/xj/common/view/focus/InterceptFocusEventConstraintLayout;
- 
+
      const-string v2, "rootView"
 @@ -4193,20 +4423,20 @@
- 
+
      iget-object v2, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
- 
+
 -    if-eqz v2, :cond_3
 +    if-eqz v2, :cond_5
- 
+
      invoke-virtual {v2}, Lcom/xj/winemu/api/bean/WineActivityData;->e()Ljava/lang/String;
- 
+
      move-result-object v2
- 
+
 -    if-nez v2, :cond_2
 +    if-nez v2, :cond_4
- 
+
      goto :goto_0
- 
+
 -    :cond_2
 +    :cond_4
      move-object v3, v2
- 
+
 -    :cond_3
 +    :cond_5
      :goto_0
      invoke-direct {p1, v3}, Lcom/xj/winemu/utils/WineInGameSettings;-><init>(Ljava/lang/String;)V
- 
+
 @@ -4216,13 +4446,13 @@
- 
+
      const/4 v2, 0x0
- 
+
 -    if-eqz p1, :cond_8
 +    if-eqz p1, :cond_a
- 
+
      invoke-virtual {p1}, Lcom/xj/winemu/api/bean/WineActivityData;->d()Ljava/lang/String;
- 
+
      move-result-object p1
- 
+
 -    if-eqz p1, :cond_8
 +    if-eqz p1, :cond_a
- 
+
      const-class v3, Lcom/xj/winemu/api/bean/IWinEmuService;
- 
+
 @@ -4234,7 +4464,7 @@
- 
+
      check-cast v3, Lcom/xj/winemu/api/bean/IWinEmuService;
- 
+
 -    if-eqz v3, :cond_4
 +    if-eqz v3, :cond_6
- 
+
      invoke-interface {v3, p1}, Lcom/xj/winemu/api/bean/IWinEmuService;->p(Ljava/lang/String;)Landroid/graphics/Bitmap;
- 
+
 @@ -4242,21 +4472,21 @@
- 
+
      goto :goto_1
- 
+
 -    :cond_4
 +    :cond_6
      move-object p1, v1
- 
+
      :goto_1
 -    if-nez p1, :cond_6
 +    if-nez p1, :cond_8
- 
+
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->g:Lcom/xj/winemu/databinding/ActivityWineBinding;
- 
+
 -    if-nez p1, :cond_5
 +    if-nez p1, :cond_7
- 
+
      invoke-static {v0}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object p1, v1
- 
+
 -    :cond_5
 +    :cond_7
      iget-object p1, p1, Lcom/xj/winemu/databinding/ActivityWineBinding;->ivGameLogo:Lcom/xj/base/view/RoundedImageView;
- 
+
      sget v3, Lcom/xj/winemu/R$drawable;->wine_default_exe_icon:I
 @@ -4265,16 +4495,16 @@
- 
+
      goto :goto_2
- 
+
 -    :cond_6
 +    :cond_8
      iget-object v3, p0, Lcom/xj/winemu/WineActivity;->g:Lcom/xj/winemu/databinding/ActivityWineBinding;
- 
+
 -    if-nez v3, :cond_7
 +    if-nez v3, :cond_9
- 
+
      invoke-static {v0}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object v3, v1
- 
+
 -    :cond_7
 +    :cond_9
      iget-object v3, v3, Lcom/xj/winemu/databinding/ActivityWineBinding;->ivGameLogo:Lcom/xj/base/view/RoundedImageView;
- 
+
      invoke-virtual {v3, p1}, Landroidx/appcompat/widget/AppCompatImageView;->setImageBitmap(Landroid/graphics/Bitmap;)V
 @@ -4284,16 +4514,16 @@
- 
+
      goto :goto_3
- 
+
 -    :cond_8
 +    :cond_a
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->g:Lcom/xj/winemu/databinding/ActivityWineBinding;
- 
+
 -    if-nez p1, :cond_9
 +    if-nez p1, :cond_b
- 
+
      invoke-static {v0}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object p1, v1
- 
+
 -    :cond_9
 +    :cond_b
      iget-object p1, p1, Lcom/xj/winemu/databinding/ActivityWineBinding;->ivGameLogo:Lcom/xj/base/view/RoundedImageView;
- 
+
      sget v3, Lcom/xj/winemu/R$drawable;->wine_default_exe_icon:I
 @@ -4305,31 +4535,31 @@
      :goto_3
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
- 
+
 -    if-eqz p1, :cond_e
 +    if-eqz p1, :cond_10
- 
+
      invoke-virtual {p1}, Lcom/xj/winemu/api/bean/WineActivityData;->g()Ljava/lang/String;
- 
+
      move-result-object p1
- 
+
 -    if-eqz p1, :cond_e
 +    if-eqz p1, :cond_10
- 
+
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
- 
+
      const/4 v3, 0x1
- 
+
 -    if-eqz p1, :cond_a
 +    if-eqz p1, :cond_c
- 
+
      invoke-virtual {p1}, Lcom/xj/winemu/api/bean/WineActivityData;->b()Z
- 
+
      move-result p1
- 
+
 -    if-ne p1, v3, :cond_a
 +    if-ne p1, v3, :cond_c
- 
+
      move p1, v3
- 
+
      goto :goto_4
- 
+
 -    :cond_a
 +    :cond_c
      move p1, v2
- 
+
      :goto_4
 @@ -4337,7 +4567,7 @@
- 
+
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
- 
+
 -    if-eqz p1, :cond_b
 +    if-eqz p1, :cond_d
- 
+
      invoke-virtual {p1}, Lcom/xj/winemu/api/bean/WineActivityData;->h()Ljava/lang/String;
- 
+
 @@ -4345,26 +4575,26 @@
- 
+
      goto :goto_5
- 
+
 -    :cond_b
 +    :cond_d
      move-object p1, v1
- 
+
      :goto_5
 -    if-eqz p1, :cond_d
 +    if-eqz p1, :cond_f
- 
+
      invoke-interface {p1}, Ljava/lang/CharSequence;->length()I
- 
+
      move-result p1
- 
+
 -    if-nez p1, :cond_c
 +    if-nez p1, :cond_e
- 
+
      goto :goto_6
- 
+
 -    :cond_c
 +    :cond_e
      move p1, v2
- 
+
      goto :goto_7
- 
+
 -    :cond_d
 +    :cond_f
      :goto_6
      move p1, v3
- 
+
 @@ -4373,16 +4603,16 @@
- 
+
      iput-boolean p1, p0, Lcom/xj/winemu/WineActivity;->I:Z
- 
+
 -    :cond_e
 +    :cond_10
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->g:Lcom/xj/winemu/databinding/ActivityWineBinding;
- 
+
 -    if-nez p1, :cond_f
 +    if-nez p1, :cond_11
- 
+
      invoke-static {v0}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object p1, v1
- 
+
 -    :cond_f
 +    :cond_11
      iget-object p1, p1, Lcom/xj/winemu/databinding/ActivityWineBinding;->drawerWineSlider:Lcom/xj/winemu/sidebar/WineActivityDrawerContent;
- 
+
      iget-object v3, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
 @@ -4391,13 +4621,13 @@
- 
+
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->g:Lcom/xj/winemu/databinding/ActivityWineBinding;
- 
+
 -    if-nez p1, :cond_10
 +    if-nez p1, :cond_12
- 
+
      invoke-static {v0}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object p1, v1
- 
+
 -    :cond_10
 +    :cond_12
      iget-object p1, p1, Lcom/xj/winemu/databinding/ActivityWineBinding;->drawerWineSlider:Lcom/xj/winemu/sidebar/WineActivityDrawerContent;
- 
+
      iget v3, p0, Lcom/xj/winemu/WineActivity;->v:F
 @@ -4406,13 +4636,13 @@
- 
+
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->g:Lcom/xj/winemu/databinding/ActivityWineBinding;
- 
+
 -    if-nez p1, :cond_11
 +    if-nez p1, :cond_13
- 
+
      invoke-static {v0}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object p1, v1
- 
+
 -    :cond_11
 +    :cond_13
      iget-object p1, p1, Lcom/xj/winemu/databinding/ActivityWineBinding;->layoutXContainer:Landroid/widget/FrameLayout;
- 
+
      const-string v3, "layoutXContainer"
 @@ -4431,7 +4661,7 @@
- 
+
      iget-object v4, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
- 
+
 -    if-eqz v4, :cond_12
 +    if-eqz v4, :cond_14
- 
+
      invoke-virtual {v4}, Lcom/xj/winemu/api/bean/WineActivityData;->g()Ljava/lang/String;
- 
+
 @@ -4439,7 +4669,7 @@
- 
+
      goto :goto_8
- 
+
 -    :cond_12
 +    :cond_14
      move-object v4, v1
- 
+
      :goto_8
 @@ -4447,7 +4677,7 @@
- 
+
      iget-object v6, p0, Lcom/xj/winemu/WineActivity;->r:Lcom/xj/winemu/api/bean/WineActivityData;
- 
+
 -    if-eqz v6, :cond_13
 +    if-eqz v6, :cond_15
- 
+
      invoke-virtual {v6}, Lcom/xj/winemu/api/bean/WineActivityData;->b()Z
- 
+
 @@ -4459,7 +4689,7 @@
- 
+
      goto :goto_9
- 
+
 -    :cond_13
 +    :cond_15
      move-object v6, v1
- 
+
      :goto_9
 @@ -4503,13 +4733,13 @@
- 
+
      const-string v4, "winuiBridge"
- 
+
 -    if-nez p1, :cond_14
 +    if-nez p1, :cond_16
- 
+
      invoke-static {v4}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object p1, v1
- 
+
 -    :cond_14
 +    :cond_16
      new-instance v5, Lcom/xj/winemu/n0;
- 
+
      invoke-direct {v5, p0}, Lcom/xj/winemu/n0;-><init>(Lcom/xj/winemu/WineActivity;)V
 @@ -4518,13 +4748,13 @@
- 
+
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
- 
+
 -    if-nez p1, :cond_15
 +    if-nez p1, :cond_17
- 
+
      invoke-static {v4}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object p1, v1
- 
+
 -    :cond_15
 +    :cond_17
      new-instance v5, Lcom/xj/winemu/o0;
- 
+
      invoke-direct {v5, p0}, Lcom/xj/winemu/o0;-><init>(Lcom/xj/winemu/WineActivity;)V
 @@ -4533,13 +4763,13 @@
- 
+
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
- 
+
 -    if-nez p1, :cond_16
 +    if-nez p1, :cond_18
- 
+
      invoke-static {v4}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object p1, v1
- 
+
 -    :cond_16
 +    :cond_18
      new-instance v5, Lcom/xj/winemu/p0;
- 
+
      invoke-direct {v5, p0}, Lcom/xj/winemu/p0;-><init>(Lcom/xj/winemu/WineActivity;)V
 @@ -4549,7 +4779,7 @@
      :try_start_0
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
- 
+
 -    if-nez p1, :cond_17
 +    if-nez p1, :cond_19
- 
+
      invoke-static {v4}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
 @@ -4562,28 +4792,28 @@
- 
+
      goto :goto_b
- 
+
 -    :cond_17
 +    :cond_19
      :goto_a
      invoke-virtual {p1, p0}, Lcom/winemu/openapi/WinUIBridge;->P(Landroid/app/Activity;)V
- 
+
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
- 
+
 -    if-nez p1, :cond_18
 +    if-nez p1, :cond_1a
- 
+
      invoke-static {v4}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object p1, v1
- 
+
 -    :cond_18
 +    :cond_1a
      iget-object v5, p0, Lcom/xj/winemu/WineActivity;->g:Lcom/xj/winemu/databinding/ActivityWineBinding;
- 
+
 -    if-nez v5, :cond_19
 +    if-nez v5, :cond_1b
- 
+
      invoke-static {v0}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object v5, v1
- 
+
 -    :cond_19
 +    :cond_1b
      iget-object v0, v5, Lcom/xj/winemu/databinding/ActivityWineBinding;->layoutXContainer:Landroid/widget/FrameLayout;
- 
+
      invoke-static {v0, v3}, Lkotlin/jvm/internal/Intrinsics;->f(Ljava/lang/Object;Ljava/lang/String;)V
 @@ -4592,24 +4822,24 @@
- 
+
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
- 
+
 -    if-nez p1, :cond_1a
 +    if-nez p1, :cond_1c
- 
+
      invoke-static {v4}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object p1, v1
- 
+
 -    :cond_1a
 +    :cond_1c
      invoke-virtual {p1}, Lcom/winemu/openapi/WinUIBridge;->M()Lcom/winemu/core/gamepad/GamepadManager;
- 
+
      move-result-object p1
- 
+
      iput-object p1, p0, Lcom/xj/winemu/WineActivity;->w:Lcom/winemu/core/gamepad/GamepadManager;
- 
+
 -    if-eqz p1, :cond_1b
 +    if-eqz p1, :cond_1d
- 
+
      invoke-virtual {p1, p0}, Lcom/winemu/core/gamepad/GamepadManager;->d(Lcom/winemu/core/gamepad/GamepadEventListener;)V
- 
+
 -    :cond_1b
 +    :cond_1d
      invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->f3()V
- 
+
      invoke-virtual {p0}, Lcom/xj/winemu/WineActivity;->C2()V
 @@ -4651,7 +4881,7 @@
      :try_start_1
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
- 
+
 -    if-nez p1, :cond_1c
 +    if-nez p1, :cond_1e
- 
+
      invoke-static {v4}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
 @@ -4664,19 +4894,19 @@
- 
+
      goto/16 :goto_f
- 
+
 -    :cond_1c
 +    :cond_1e
      :goto_d
      invoke-virtual {p1}, Lcom/winemu/openapi/WinUIBridge;->E()Lkotlinx/coroutines/Job;
- 
+
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
- 
+
 -    if-nez p1, :cond_1d
 +    if-nez p1, :cond_1f
- 
+
      invoke-static {v4}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object p1, v1
- 
+
 -    :cond_1d
 +    :cond_1f
      new-instance v0, Lcom/xj/winemu/WineActivity$onCreate$8;
- 
+
      invoke-direct {v0, p0}, Lcom/xj/winemu/WineActivity$onCreate$8;-><init>(Lcom/xj/winemu/WineActivity;)V
 @@ -4685,13 +4915,13 @@
- 
+
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
- 
+
 -    if-nez p1, :cond_1e
 +    if-nez p1, :cond_20
- 
+
      invoke-static {v4}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object p1, v1
- 
+
 -    :cond_1e
 +    :cond_20
      new-instance v0, Lcom/xj/winemu/WineActivity$onCreate$9;
- 
+
      invoke-direct {v0, p0}, Lcom/xj/winemu/WineActivity$onCreate$9;-><init>(Lcom/xj/winemu/WineActivity;)V
 @@ -4704,14 +4934,14 @@
- 
+
      const-string v0, "wineInGameSettingsSaver"
- 
+
 -    if-nez p1, :cond_1f
 +    if-nez p1, :cond_21
- 
+
      :try_start_2
      invoke-static {v0}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object p1, v1
- 
+
 -    :cond_1f
 +    :cond_21
      invoke-virtual {p1}, Lcom/xj/winemu/utils/WineInGameSettings;->d()Lcom/xj/winemu/bean/FpsLimit;
- 
+
      move-result-object p1
 @@ -4720,7 +4950,7 @@
- 
+
      move-result v3
- 
+
 -    if-eqz v3, :cond_23
 +    if-eqz v3, :cond_25
- 
+
      invoke-virtual {p1}, Lcom/xj/winemu/bean/FpsLimit;->getFpsLimit()I
- 
+
 @@ -4734,7 +4964,7 @@
- 
+
      move-result v3
- 
+
 -    if-eqz v3, :cond_20
 +    if-eqz v3, :cond_22
- 
+
      new-instance v3, Ljava/lang/StringBuilder;
- 
+
 @@ -4752,58 +4982,58 @@
- 
+
      invoke-static {v5, v3}, Lcom/xj/common/utils/XjLog;->c(Ljava/lang/String;Ljava/lang/String;)V
- 
+
 -    :cond_20
 +    :cond_22
      iget-object v3, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
- 
+
 -    if-nez v3, :cond_21
 +    if-nez v3, :cond_23
- 
+
      invoke-static {v4}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object v3, v1
- 
+
 -    :cond_21
 +    :cond_23
      const/4 v5, -0x1
- 
+
 -    if-ne p1, v5, :cond_22
 +    if-ne p1, v5, :cond_24
- 
+
      move p1, v2
- 
+
 -    :cond_22
 +    :cond_24
      invoke-virtual {v3, p1}, Lcom/winemu/openapi/WinUIBridge;->h0(I)V
- 
+
      goto :goto_e
- 
+
 -    :cond_23
 +    :cond_25
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
- 
+
 -    if-nez p1, :cond_24
 +    if-nez p1, :cond_26
- 
+
      invoke-static {v4}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object p1, v1
- 
+
 -    :cond_24
 +    :cond_26
      invoke-virtual {p1, v2}, Lcom/winemu/openapi/WinUIBridge;->h0(I)V
- 
+
      :goto_e
      iget-object p1, p0, Lcom/xj/winemu/WineActivity;->h:Lcom/winemu/openapi/WinUIBridge;
- 
+
 -    if-nez p1, :cond_25
 +    if-nez p1, :cond_27
- 
+
      invoke-static {v4}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object p1, v1
- 
+
 -    :cond_25
 +    :cond_27
      iget-object v3, p0, Lcom/xj/winemu/WineActivity;->y:Lcom/xj/winemu/utils/WineInGameSettings;
- 
+
 -    if-nez v3, :cond_26
 +    if-nez v3, :cond_28
- 
+
      invoke-static {v0}, Lkotlin/jvm/internal/Intrinsics;->y(Ljava/lang/String;)V
- 
+
      move-object v3, v1
- 
+
 -    :cond_26
 +    :cond_28
      invoke-virtual {v3}, Lcom/xj/winemu/utils/WineInGameSettings;->e()Z
- 
+
      move-result v0

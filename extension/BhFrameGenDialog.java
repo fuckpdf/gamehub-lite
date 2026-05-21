@@ -18,6 +18,8 @@ import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 public class BhFrameGenDialog extends Dialog {
 
     private final BhFrameGenSettings settings;
@@ -272,7 +274,7 @@ public class BhFrameGenDialog extends Dialog {
     }
 
     private static String formatFloat(float v) {
-        return String.format("%.2f", v);
+        return String.format(Locale.ROOT, "%.2f", v);
     }
 
     private void updatePresetLabel() {

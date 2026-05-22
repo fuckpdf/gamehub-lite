@@ -153,6 +153,14 @@ check_dependencies() {
         missing+=("apksigner or jarsigner")
     fi
 
+    if ! command -v unzip &>/dev/null; then
+        missing+=("unzip")
+    fi
+
+    if ! command -v zip &>/dev/null; then
+        missing+=("zip")
+    fi
+
     if [ ${#missing[@]} -ne 0 ]; then
         print_error "Missing dependencies: ${missing[*]}"
         echo ""
@@ -331,9 +339,102 @@ rebuild_apk() {
 
     mkdir -p "$OUTPUT_DIR"
 
-    apktool b "$WORK_DIR/decompiled" -o "$WORK_DIR/unsigned.apk" 2>&1 | tail -5
+    if ! apktool b "$WORK_DIR/decompiled" -o "$WORK_DIR/unsigned.apk"; then
+        print_error "apktool build failed"
+        return 1
+    fi
 
     print_success "APK rebuilt"
+
+    inject_extension_dex
+}
+
+# Compile extension/*.java into a classes.dex for local builds.
+# Mirrors the CI step in .github/workflows/build-debug.yml.
+# Sets EXTENSION_DEX_PATH on success.
+compile_extension_dex() {
+    local src_dir="$1"
+    print_step "Compiling extension/*.java for local dex injection..."
+
+    if ! command -v javac &>/dev/null; then
+        print_error "javac not found in PATH."
+        print_error "Install a JDK, or pre-build the dex and export EXTENSION_DEX_PATH."
+        return 1
+    fi
+
+    local sdk_root="${ANDROID_SDK_ROOT:-${ANDROID_HOME:-}}"
+    if [ -z "$sdk_root" ] || [ ! -d "$sdk_root" ]; then
+        print_error "ANDROID_SDK_ROOT (or ANDROID_HOME) is not set."
+        print_error "Set it to your Android SDK, or pre-build the dex and export EXTENSION_DEX_PATH."
+        return 1
+    fi
+
+    local android_jar
+    android_jar=$(find "$sdk_root/platforms" -maxdepth 2 -name 'android.jar' -type f 2>/dev/null | sort -V | tail -1)
+    if [ -z "$android_jar" ] || [ ! -f "$android_jar" ]; then
+        print_error "android.jar not found under $sdk_root/platforms/."
+        print_error "Install a platform, e.g. sdkmanager 'platforms;android-34'."
+        return 1
+    fi
+
+    local d8_bin
+    d8_bin=$(find "$sdk_root/build-tools" -maxdepth 2 -name 'd8' -type f 2>/dev/null | sort -V | tail -1)
+    if [ -z "$d8_bin" ] || [ ! -x "$d8_bin" ]; then
+        print_error "d8 not found under $sdk_root/build-tools/."
+        print_error "Install build-tools, e.g. sdkmanager 'build-tools;34.0.0'."
+        return 1
+    fi
+
+    local ext_build_dir="$WORK_DIR/ext_build"
+    rm -rf "$ext_build_dir"
+    mkdir -p "$ext_build_dir/classes" "$ext_build_dir/dex"
+
+    javac -source 8 -target 8 -cp "$android_jar" -d "$ext_build_dir/classes" "$src_dir"/*.java
+    # shellcheck disable=SC2046
+    "$d8_bin" --release --output "$ext_build_dir/dex" $(find "$ext_build_dir/classes" -name '*.class')
+
+    if [ ! -f "$ext_build_dir/dex/classes.dex" ]; then
+        print_error "d8 did not produce classes.dex"
+        return 1
+    fi
+
+    EXTENSION_DEX_PATH="$ext_build_dir/dex/classes.dex"
+    print_success "Compiled extension dex: $EXTENSION_DEX_PATH"
+}
+
+# Inject Java extension dex (extension/*.java -> classes.dex).
+# CI sets EXTENSION_DEX_PATH to a pre-built classes.dex.
+# Local builds auto-compile extension/*.java when present so the resulting APK
+# is not missing classes referenced by unconditional smali hooks.
+# If neither a pre-built dex nor extension sources are present, skip silently to
+# preserve downstream sub-branches that have stripped both the sources and the
+# hooks. Detects next free classesN.dex slot in the APK and zips ours in.
+inject_extension_dex() {
+    local ext_src_dir="$SCRIPT_DIR/extension"
+
+    if [ -z "$EXTENSION_DEX_PATH" ] && [ -d "$ext_src_dir" ] && compgen -G "$ext_src_dir/*.java" >/dev/null; then
+        compile_extension_dex "$ext_src_dir" || exit 1
+    fi
+
+    if [ -z "$EXTENSION_DEX_PATH" ] || [ ! -f "$EXTENSION_DEX_PATH" ]; then
+        return 0
+    fi
+
+    print_step "Injecting extension dex from $EXTENSION_DEX_PATH..."
+
+    # Find next free classesN.dex slot
+    local next=2
+    while unzip -l "$WORK_DIR/unsigned.apk" 2>/dev/null | grep -qE "classes${next}\.dex$"; do
+        next=$((next + 1))
+    done
+
+    local tmp_dir
+    tmp_dir=$(mktemp -d)
+    cp "$EXTENSION_DEX_PATH" "$tmp_dir/classes${next}.dex"
+    (cd "$tmp_dir" && zip -j -q "$WORK_DIR/unsigned.apk" "classes${next}.dex")
+    rm -rf "$tmp_dir"
+
+    print_success "Extension dex injected as classes${next}.dex"
 }
 
 align_apk() {

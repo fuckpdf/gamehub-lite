@@ -1,0 +1,13 @@
+--- a/smali_classes4/com/xj/winemu/WinEmuServiceImpl$launchContainer$2$1$7.smali
++++ b/smali_classes4/com/xj/winemu/WinEmuServiceImpl$launchContainer$2$1$7.smali
+@@ -208,6 +208,10 @@
+ 
+     iget-object v1, p0, Lcom/xj/winemu/WinEmuServiceImpl$launchContainer$2$1$7;->$launchLog:Ljava/lang/String;
+ 
++    invoke-static {v1}, Lcom/xj/common/utils/SensitiveLogRedactor;->a(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v1
++
+     invoke-virtual {p1, v0, v1}, Lcom/xj/common/utils/FileUtilsExpansion;->g(Ljava/io/File;Ljava/lang/String;)V
+ 
+     sget-object p1, Lkotlin/Unit;->a:Lkotlin/Unit;

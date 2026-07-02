@@ -2853,6 +2853,7 @@ res/mipmap-xxxhdpi/ic_pc_scut_foreground.webp
 smali_classes10/bin/mt/file/content/MTDataFilesWakeUpActivity.smali
 smali_classes10/bin/mt/file/content/MTDataFilesProvider.smali
 smali_classes4/com/xj/app/SplashActivity$IntroVideoTimer.smali
+smali_classes4/com/xj/common/utils/SensitiveLogRedactor.smali
 smali_classes4/com/xj/winemu/PcEmuSetupDialog$1.smali
 smali_classes5/com/xj/cloud/ui/setting/CloudGameSettingDataHelper.smali
 smali_classes5/com/xj/landscape/launcher/ui/gamedetail/GameDetailActivity$CopyLocalGameIdClickListener.smali

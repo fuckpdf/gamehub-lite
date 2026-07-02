@@ -1,0 +1,79 @@
+--- a/smali_classes4/com/xj/common/utils/XjLog.smali
++++ b/smali_classes4/com/xj/common/utils/XjLog.smali
+@@ -103,6 +103,10 @@
+ 
+     invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->g(Ljava/lang/Object;Ljava/lang/String;)V
+ 
++    invoke-static {p1}, Lcom/xj/common/utils/SensitiveLogRedactor;->a(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p1
++
+     sget-boolean v0, Lcom/xj/common/utils/XjLog;->b:Z
+ 
+     if-eqz v0, :cond_1
+@@ -142,6 +146,10 @@
+ 
+     invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->g(Ljava/lang/Object;Ljava/lang/String;)V
+ 
++    invoke-static {p1}, Lcom/xj/common/utils/SensitiveLogRedactor;->a(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p1
++
+     invoke-static {p0, p1}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;)I
+ 
+     filled-new-array {p1}, [Ljava/lang/Object;
+@@ -164,6 +172,10 @@
+ 
+     invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->g(Ljava/lang/Object;Ljava/lang/String;)V
+ 
++    invoke-static {p1}, Lcom/xj/common/utils/SensitiveLogRedactor;->a(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p1
++
+     const-string v0, "e"
+ 
+     invoke-static {p2, v0}, Lkotlin/jvm/internal/Intrinsics;->g(Ljava/lang/Object;Ljava/lang/String;)V
+@@ -189,6 +201,10 @@
+     const-string v0, "msg"
+ 
+     invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->g(Ljava/lang/Object;Ljava/lang/String;)V
++
++    invoke-static {p1}, Lcom/xj/common/utils/SensitiveLogRedactor;->a(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p1
+ 
+     invoke-static {p0, p1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
+ 
+@@ -260,6 +276,10 @@
+ 
+     invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->g(Ljava/lang/Object;Ljava/lang/String;)V
+ 
++    invoke-static {p1}, Lcom/xj/common/utils/SensitiveLogRedactor;->a(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p1
++
+     sget-boolean v0, Lcom/xj/common/utils/XjLog;->b:Z
+ 
+     if-eqz v0, :cond_1
+@@ -299,6 +319,10 @@
+ 
+     invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->g(Ljava/lang/Object;Ljava/lang/String;)V
+ 
++    invoke-static {p1}, Lcom/xj/common/utils/SensitiveLogRedactor;->a(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p1
++
+     invoke-static {p0, p1}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
+ 
+     filled-new-array {p1}, [Ljava/lang/Object;
+@@ -320,6 +344,10 @@
+     const-string v0, "msg"
+ 
+     invoke-static {p1, v0}, Lkotlin/jvm/internal/Intrinsics;->g(Ljava/lang/Object;Ljava/lang/String;)V
++
++    invoke-static {p1}, Lcom/xj/common/utils/SensitiveLogRedactor;->a(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p1
+ 
+     const-string v0, "e"
+ 

@@ -1,0 +1,35 @@
+--- a/smali_classes4/com/xj/common/utils/LogA.smali
++++ b/smali_classes4/com/xj/common/utils/LogA.smali
+@@ -48,6 +48,10 @@
+ 
+     invoke-static {p2, v0}, Lkotlin/jvm/internal/Intrinsics;->g(Ljava/lang/Object;Ljava/lang/String;)V
+ 
++    invoke-static {p2}, Lcom/xj/common/utils/SensitiveLogRedactor;->a(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p2
++
+     sget-boolean v0, Lcom/xj/common/utils/LogA;->b:Z
+ 
+     if-eqz v0, :cond_0
+@@ -89,6 +93,10 @@
+ 
+     invoke-static {p2, v0}, Lkotlin/jvm/internal/Intrinsics;->g(Ljava/lang/Object;Ljava/lang/String;)V
+ 
++    invoke-static {p2}, Lcom/xj/common/utils/SensitiveLogRedactor;->a(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p2
++
+     sget-boolean v0, Lcom/xj/common/utils/LogA;->b:Z
+ 
+     if-eqz v0, :cond_0
+@@ -138,6 +146,10 @@
+ 
+     invoke-static {p2, v0}, Lkotlin/jvm/internal/Intrinsics;->g(Ljava/lang/Object;Ljava/lang/String;)V
+ 
++    invoke-static {p2}, Lcom/xj/common/utils/SensitiveLogRedactor;->a(Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p2
++
+     sget-boolean v0, Lcom/xj/common/utils/LogA;->b:Z
+ 
+     if-eqz v0, :cond_0

@@ -154,12 +154,15 @@ smali_classes4/com/xj/common/preview/PreviewVideoFragment.smali
 smali_classes4/com/xj/common/service/IUmengService.smali
 smali_classes4/com/xj/common/user/UserManager.smali
 smali_classes4/com/xj/common/utils/BatteryUtil.smali
+smali_classes4/com/xj/common/utils/LogA.smali
 smali_classes4/com/xj/common/utils/PermissionUtils.smali
+smali_classes4/com/xj/common/utils/XjLog.smali
 smali_classes4/com/xj/common/view/dialog/permission/RequestBlePermissionDialogFragment.smali
 smali_classes4/com/xj/common/view/tab/CommonTextTabLayout.smali
 smali_classes4/com/xj/game/ui/game_library/GameLibraryActivity.smali
 smali_classes4/com/xj/winemu/PcEmuSetupDialog.smali
 smali_classes4/com/xj/winemu/WineActivity.smali
+smali_classes4/com/xj/winemu/WinEmuServiceImpl$launchContainer$2$1$7.smali
 smali_classes4/com/xj/winemu/settings/models/PcGameSettingsKt.smali
 smali_classes4/com/xj/winemu/sidebar/SidebarControlsFragment.smali
 smali_classes4/com/xj/winemu/sidebar/SidebarPerformanceFragment.smali
@@ -221,6 +224,7 @@ smali_classes5/com/xj/umeng/soa/IUmengServiceImpl.smali
 smali_classes5/com/xj/winemu/ui/dialog/EditImportedGameInfoDialog.smali
 smali_classes5/com/xj/winemu/ui/env_setting/WinEmuEnvListFragment.smali
 smali_classes5/com/zhpan/bannerview/utils/BannerUtils.smali
+smali_classes6/in/dragonbra/javasteam/util/log/Logger.smali
 smali_classes6/kotlin/time/DurationJvmKt.smali
 smali_classes7/org/bouncycastle/pqc/crypto/newhope/NewHope.smali
 smali_classes7/org/bouncycastle/pqc/jcajce/provider/mceliece/BCMcEliecePrivateKey.smali

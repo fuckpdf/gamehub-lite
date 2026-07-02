@@ -32,6 +32,15 @@ GameHub Lite is a modified version of GameHub that:
 Install the required tools:
 
 Get `adb` either via Android Studio or `platform-tools` package.
+GameHub Lite patches are generated against apktool 2.12.1. Newer apktool
+versions can rewrite decoded XML enough to break patch application; `patch.sh`
+will use `tools/apktool_2.12.1.jar` automatically if it exists.
+
+```bash
+mkdir -p tools
+curl -L https://github.com/iBotPeaches/Apktool/releases/download/v2.12.1/apktool_2.12.1.jar \
+  -o tools/apktool_2.12.1.jar
+```
 
 ```bash
 # macOS
@@ -230,7 +239,8 @@ If patches fail due to APK version mismatch:
 
 ### Build errors
 
-- Ensure apktool is version 2.8.0+ (`apktool --version`)
+- Ensure apktool is version 2.12.1 (`apktool --version`), or place
+  `apktool_2.12.1.jar` at `tools/apktool_2.12.1.jar`
 - Check Java version is 17+ (`java -version`)
 - Try cleaning work directory: `rm -rf work/`
 

@@ -19,6 +19,12 @@ PATCHES_DIR="$SCRIPT_DIR/patches"
 WORK_DIR="$SCRIPT_DIR/work"
 OUTPUT_DIR="$SCRIPT_DIR/output"
 
+# The patch set is generated against apktool 2.12.1 output. Apktool 3.x
+# rewrites resource XML formatting enough that many existing hunks miss.
+# I may or may not make this work eventually with apktool 3.x.
+APKTOOL_REQUIRED_VERSION="${APKTOOL_REQUIRED_VERSION:-2.12.1}"
+APKTOOL_JAR="${APKTOOL_JAR:-$SCRIPT_DIR/tools/apktool_${APKTOOL_REQUIRED_VERSION}.jar}"
+
 # Keystore configuration (can be overridden via environment variables)
 KEYSTORE="${KEYSTORE:-$SCRIPT_DIR/keystore/debug.keystore}"
 KEYSTORE_PASS="${KEYSTORE_PASS:-android}"
@@ -69,6 +75,18 @@ print_warning() {
 
 print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
+}
+
+run_apktool() {
+    if [ -f "$APKTOOL_JAR" ]; then
+        java -jar "$APKTOOL_JAR" "$@"
+    else
+        apktool "$@"
+    fi
+}
+
+get_apktool_version() {
+    run_apktool --version 2>/dev/null | head -1 | tr -d '\r'
 }
 
 # Extract version from apktool.yml after decompilation
@@ -137,7 +155,7 @@ check_dependencies() {
 
     local missing=()
 
-    if ! command -v apktool &>/dev/null; then
+    if [ ! -f "$APKTOOL_JAR" ] && ! command -v apktool &>/dev/null; then
         missing+=("apktool")
     fi
 
@@ -170,6 +188,26 @@ check_dependencies() {
         exit 1
     fi
 
+    local apktool_version
+    apktool_version="$(get_apktool_version || true)"
+    if [ -z "$apktool_version" ]; then
+        print_error "Unable to determine apktool version"
+        exit 1
+    fi
+
+    if [ "$apktool_version" != "$APKTOOL_REQUIRED_VERSION" ]; then
+        print_error "Unsupported apktool version: $apktool_version"
+        echo ""
+        echo "This patch set is generated for apktool $APKTOOL_REQUIRED_VERSION."
+        echo "Apktool 3.x changes decompiled XML/apktool.yml formatting, causing existing resource patches to fail."
+        echo ""
+        echo "Use one of:"
+        echo "  APKTOOL_JAR=\"$SCRIPT_DIR/tools/apktool_${APKTOOL_REQUIRED_VERSION}.jar\" ./patch.sh"
+        echo "  or install apktool $APKTOOL_REQUIRED_VERSION in PATH."
+        exit 1
+    fi
+
+    print_success "Using apktool $apktool_version"
     print_success "All dependencies found"
 }
 
@@ -235,7 +273,7 @@ decompile_apk() {
     rm -rf "$WORK_DIR"
     mkdir -p "$WORK_DIR"
 
-    apktool d -f "$SOURCE_APK" -o "$WORK_DIR/decompiled" 2>&1 | tail -5
+    run_apktool d -f "$SOURCE_APK" -o "$WORK_DIR/decompiled" 2>&1 | tail -5
 
     print_success "APK decompiled to $WORK_DIR/decompiled"
 }
@@ -273,7 +311,7 @@ apply_patches() {
         fi
 
         if [ -f "$patch_file" ] && [ -f "$target" ]; then
-            if patch -s -N "$target" < "$patch_file" 2>/dev/null; then
+            if patch -s -N "$target" <"$patch_file" 2>/dev/null; then
                 count=$((count + 1))
             else
                 failed=$((failed + 1))
@@ -339,7 +377,7 @@ rebuild_apk() {
 
     mkdir -p "$OUTPUT_DIR"
 
-    if ! apktool b "$WORK_DIR/decompiled" -o "$WORK_DIR/unsigned.apk"; then
+    if ! run_apktool b "$WORK_DIR/decompiled" -o "$WORK_DIR/unsigned.apk"; then
         print_error "apktool build failed"
         return 1
     fi

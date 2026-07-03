@@ -25,6 +25,12 @@ GameHub Lite is a modified version of GameHub that:
 - **Changes package name** - `gamehub.lite` for side-by-side installation
 - **Adds custom news page** - Uses community API for updates
 
+## Security Issues
+
+Please do not post security issues publicly before they have been reviewed. See
+[SECURITY.md](./SECURITY.md) for the private reporting process through the
+[EmuReady Discord](https://discord.gg/CYhCzApXav).
+
 ## Quick Start
 
 ### Prerequisites
